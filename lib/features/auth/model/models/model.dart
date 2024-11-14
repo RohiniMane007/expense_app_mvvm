@@ -19,16 +19,6 @@ class User extends Equatable {
     required this.password,
   });
 
-  // User copyWith({required String firstname}) {
-  //   return User(
-  //       firstname: firstname ?? this.firstname,
-  //       lastname: lastname,
-  //       phoneno: phoneno,
-  //       email: email,
-  //       username: username,
-  //       password: password);
-  // }
-
   @override
   List<Object?> get props =>
       [id, firstname, lastname, phoneno, email, username, password];
