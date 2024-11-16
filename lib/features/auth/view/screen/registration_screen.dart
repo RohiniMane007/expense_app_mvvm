@@ -23,7 +23,7 @@ class RegistrationScreen extends StatelessWidget {
       appBar: AppBar(),
       body: Form(
         key: formKey,
-        child: Column(
+        child: ListView(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
