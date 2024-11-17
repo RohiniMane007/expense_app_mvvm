@@ -1,5 +1,7 @@
-import 'package:expense_app/features/auth/view/screen/registration_screen.dart';
+import 'package:expense_app/features/auth/view/view.dart';
+import 'package:expense_app/features/auth/view_model/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +19,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const RegistrationScreen(),
+      home: BlocProvider(
+        create: (context) => AuthBloc(),
+        child: const LoginScreen(),
+      ),
     );
   }
 }

@@ -26,12 +26,13 @@ import 'package:sqflite/sqflite.dart';
 import '../models/model.dart';
 
 class AuthService {
-  static Future<void> insertUser(Database db, User user) async {
-    await db.insert(
+  static Future<int> insertUser(Database db, User user) async {
+    int val = await db.insert(
       'user',
       user.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    return val;
   }
 
   static Future<void> updateUser(Database db, User user) async {
@@ -43,7 +44,17 @@ class AuthService {
     );
   }
 
-  static Future<void> deleteUser(Database db, User user) async {
-    await db.delete('user', where: 'id = ?', whereArgs: [user.id]);
+  static Future<void> deleteUser(Database db, int id) async {
+    await db.delete('user', where: 'id = ?', whereArgs: [id]);
+  }
+
+  static Future<Map> getUser(Database db, Map<String, String> user) async {
+    List<Map> maps = await db.query('user'
+        // columns: ['username', 'password'],
+        // where: 'email = ? AND password = ?',
+        // whereArgs: [user['username'], user['password']]
+        );
+    print(maps);
+    return maps[0];
   }
 }

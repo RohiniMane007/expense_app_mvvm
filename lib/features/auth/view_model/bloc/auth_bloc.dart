@@ -11,20 +11,30 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   DatabaseHelper databaseHelper = DatabaseHelper.instance;
   AuthBloc() : super(const AuthState()) {
     on<RegisterUser>(_register);
-    on<AuthEvent>(_login);
-    on<AuthEvent>(_logout);
+    on<LoginUser>(_login);
+    on<LogoutUser>(_logout);
   }
 
   Future<void> _register(RegisterUser event, Emitter<AuthState> emit) async {
-    await AuthService.insertUser(
+    int val = await AuthService.insertUser(
         await databaseHelper.database,
         User(
             name: event.name,
             phoneno: event.phoneno,
             email: event.email,
+            username: event.email,
             password: event.password));
+    print("================$val");
   }
 
-  Future<void> _login(AuthEvent event, Emitter<AuthState> emit) async {}
-  Future<void> _logout(AuthEvent event, Emitter<AuthState> emit) async {}
+  Future<void> _login(LoginUser event, Emitter<AuthState> emit) async {
+    // await AuthService.deleteUser(await databaseHelper.database, 3);
+
+    Map user = await AuthService.getUser(await databaseHelper.database,
+        {"username": event.username, "password": event.password});
+    if (user['username'] == event.username &&
+        user['password'] == event.password) {}
+  }
+
+  Future<void> _logout(LogoutUser event, Emitter<AuthState> emit) async {}
 }

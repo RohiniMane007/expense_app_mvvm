@@ -6,7 +6,7 @@ class User extends Equatable {
   // final String? lastname;
   final String? phoneno;
   final String? email;
-  // final String? username;
+  final String? username;
   final String? password;
 
   const User({
@@ -15,7 +15,7 @@ class User extends Equatable {
     // required this.lastname,
     required this.phoneno,
     required this.email,
-    // required this.username,
+    required this.username,
     required this.password,
   });
 
@@ -28,7 +28,7 @@ class User extends Equatable {
         // lastname: json["lastname"].toString(),
         phoneno: json["phoneno"] as String,
         email: json["email"] as String,
-        // username: json["username"] as String,
+        username: json["email"] as String,
         password: json["password"] as String,
       );
 
@@ -39,7 +39,7 @@ class User extends Equatable {
     // data['lastname'] = lastname;
     data['phoneno'] = phoneno;
     data['email'] = email;
-    // data['username'] = username;
+    data['username'] = email;
     data['password'] = password;
 
     return data;

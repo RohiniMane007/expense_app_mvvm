@@ -1,5 +1,7 @@
 import 'package:expense_app/features/auth/view/screen/login_screen.dart';
+import 'package:expense_app/features/auth/view_model/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 extension EmailValidator on String {
   bool isValidEmail() {
@@ -81,6 +83,11 @@ class RegistrationScreen extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
+                    BlocProvider.of<AuthBloc>(context).add(RegisterUser(
+                        name: txtName.text,
+                        email: txtEmail.text,
+                        phoneno: txtPhone.text,
+                        password: txtPassword.text));
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) {
                       return const LoginScreen();
