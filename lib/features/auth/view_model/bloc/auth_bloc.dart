@@ -30,9 +30,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _login(LoginUser event, Emitter<AuthState> emit) async {
     // await AuthService.deleteUser(await databaseHelper.database, 3);
 
-    String user = await AuthService.getUser(await databaseHelper.database,
+    String result = await AuthService.getUser(await databaseHelper.database,
         {"username": event.username, "password": event.password});
-    print(user);
+    print(result);
   }
 
   Future<void> _logout(LogoutUser event, Emitter<AuthState> emit) async {}
