@@ -1,4 +1,3 @@
-import 'package:expense_app/features/auth/view/screen/login_view.dart';
 import 'package:expense_app/features/auth/view_model/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,21 +79,24 @@ class RegistrationView extends StatelessWidget {
                     hintText: "Password *", border: OutlineInputBorder()),
               ),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    BlocProvider.of<AuthBloc>(context).add(RegisterUser(
-                        name: txtName.text,
-                        email: txtEmail.text,
-                        phoneno: txtPhone.text,
-                        password: txtPassword.text));
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const LoginView();
-                    }));
-                  }
-                },
-                child: const Text("Sign In"))
+            BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                return ElevatedButton(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        BlocProvider.of<AuthBloc>(context).add(RegisterUser(
+                            name: txtName.text.trim(),
+                            email: txtEmail.text.trim(),
+                            phoneno: txtPhone.text.trim(),
+                            password: txtPassword.text.trim()));
+                        if (state.result == 'success') {
+                          Navigator.of(context).pop();
+                        }
+                      }
+                    },
+                    child: const Text("Sign In"));
+              },
+            )
           ],
         ),
       ),

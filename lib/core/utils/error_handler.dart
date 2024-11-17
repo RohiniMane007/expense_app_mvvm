@@ -30,6 +30,6 @@ class ErrorHandler {
   static void logError(Object error) {
     // Here you could use services like Firebase Crashlytics, Sentry, etc.
     // Example: FirebaseCrashlytics.instance.recordError(error, StackTrace.current);
-    print('Logged error: $error');
+    // print('Logged error: $error');
   }
 }

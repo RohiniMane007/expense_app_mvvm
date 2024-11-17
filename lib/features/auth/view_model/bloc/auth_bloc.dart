@@ -24,15 +24,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             email: event.email,
             username: event.email,
             password: event.password));
-    print("================$val");
+    val != 0
+        ? emit(state.copyWith(result: "success"))
+        : emit(state.copyWith(result: "fail"));
   }
 
   Future<void> _login(LoginUser event, Emitter<AuthState> emit) async {
-    // await AuthService.deleteUser(await databaseHelper.database, 3);
+    // await AuthService.deleteUser(await databaseHelper.database, 4);
 
     String result = await AuthService.getUser(await databaseHelper.database,
         {"username": event.username, "password": event.password});
-    print(result);
+    // print(result);
+    emit(state.copyWith(result: result));
   }
 
   Future<void> _logout(LogoutUser event, Emitter<AuthState> emit) async {}
