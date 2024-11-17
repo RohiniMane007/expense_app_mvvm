@@ -1,4 +1,4 @@
-import 'package:expense_app/features/auth/view/screen/login_screen.dart';
+import 'package:expense_app/features/auth/view/screen/login_view.dart';
 import 'package:expense_app/features/auth/view_model/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,8 +11,8 @@ extension EmailValidator on String {
   }
 }
 
-class RegistrationScreen extends StatelessWidget {
-  const RegistrationScreen({super.key});
+class RegistrationView extends StatelessWidget {
+  const RegistrationView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +90,7 @@ class RegistrationScreen extends StatelessWidget {
                         password: txtPassword.text));
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) {
-                      return const LoginScreen();
+                      return const LoginView();
                     }));
                   }
                 },
