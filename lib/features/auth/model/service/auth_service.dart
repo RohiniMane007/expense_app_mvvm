@@ -48,13 +48,16 @@ class AuthService {
     await db.delete('user', where: 'id = ?', whereArgs: [id]);
   }
 
-  static Future<Map> getUser(Database db, Map<String, String> user) async {
-    List<Map> maps = await db.query('user'
-        // columns: ['username', 'password'],
-        // where: 'email = ? AND password = ?',
-        // whereArgs: [user['username'], user['password']]
-        );
-    print(maps);
-    return maps[0];
+  static Future<String> getUser(Database db, Map<String, String> user) async {
+    List<Map> maps = await db.query('user',
+        columns: ['username', 'password'],
+        where: 'email = ? AND password = ?',
+        whereArgs: [user['username'], user['password']]);
+
+    if (maps.length == 1) {
+      return "success";
+    } else {
+      return "fail";
+    }
   }
 }
