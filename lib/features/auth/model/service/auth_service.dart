@@ -54,6 +54,7 @@ class AuthService {
         where: 'email = ? AND password = ?',
         whereArgs: [user['username'], user['password']]);
 
+    // print(maps);
     if (maps.length == 1) {
       return "success";
     } else {

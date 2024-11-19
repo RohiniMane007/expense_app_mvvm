@@ -74,8 +74,10 @@ class LoginView extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      TextField(
+                      TextFormField(
                         controller: txtPass,
+                        obscureText: true,
+                        obscuringCharacter: '*',
                         decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.lock),
                             suffixIcon: Icon(Icons.remove_red_eye),
