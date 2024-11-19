@@ -10,7 +10,8 @@ class ExpenseView extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            decoration: const BoxDecoration(color: Colors.amber),
+            padding: const EdgeInsets.all(10),
+            decoration: const BoxDecoration(color: Colors.tealAccent),
             width: MediaQuery.sizeOf(context).width,
             height: 250,
           ),

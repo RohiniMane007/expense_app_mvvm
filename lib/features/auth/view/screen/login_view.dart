@@ -4,6 +4,8 @@ import 'package:expense_app/features/expense/view/screen/expense_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../comman/alert_dialog.dart';
+
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
@@ -27,7 +29,7 @@ class LoginView extends StatelessWidget {
               const Column(
                 children: [
                   SizedBox(
-                    height: 60,
+                    height: 40,
                   ),
                   CircleAvatar(
                       backgroundColor: Colors.white,
@@ -37,13 +39,7 @@ class LoginView extends StatelessWidget {
                         size: 40,
                         // grade: 40,
                         color: Colors.deepOrange,
-                      )
-                      // Text("Login",
-                      //     style: TextStyle(
-                      //         fontWeight: FontWeight.bold,
-                      //         fontSize: 24,
-                      //         color: Colors.orange)),
-                      ),
+                      )),
                   Text(
                     "Login",
                     style: TextStyle(
@@ -52,7 +48,7 @@ class LoginView extends StatelessWidget {
                         color: Colors.white),
                   ),
                   SizedBox(
-                    height: 60,
+                    height: 40,
                   ),
                 ],
               ),
@@ -65,29 +61,34 @@ class LoginView extends StatelessWidget {
                         topRight: Radius.circular(40))),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 50, horizontal: 20.0),
-                  child: Column(
+                      vertical: 40, horizontal: 20.0),
+                  child: ListView(
                     children: [
                       TextFormField(
                         controller: txtUser,
                         decoration: const InputDecoration(
-                            hintText: "Username", border: OutlineInputBorder()),
+                            prefixIcon: Icon(Icons.person),
+                            hintText: "Username",
+                            border: OutlineInputBorder()),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       TextField(
                         controller: txtPass,
                         decoration: const InputDecoration(
-                            hintText: "Password", border: OutlineInputBorder()),
+                            prefixIcon: Icon(Icons.lock),
+                            suffixIcon: Icon(Icons.remove_red_eye),
+                            hintText: "Password",
+                            border: OutlineInputBorder()),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, state) {
                           return ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 BlocProvider.of<AuthBloc>(context).add(
                                     LoginUser(
                                         username: txtUser.text.trim(),
@@ -99,11 +100,16 @@ class LoginView extends StatelessWidget {
                                     return const ExpenseView();
                                   }));
                                 } else {
-                                  // ScaffoldMessenger.of(context).showSnackBar(
-                                  //     const SnackBar(
-                                  //         backgroundColor: Colors.red,
-                                  //         content:
-                                  //             Text('Enter Login Credentials')));
+                                  alertDialogBox(
+                                    context,
+                                    title: 'Alert',
+                                    content: const Text(
+                                        "Please enter your username and password."),
+                                    onOkClicked: () {
+                                      txtUser.clear();
+                                      txtPass.clear();
+                                    },
+                                  );
                                 }
                               },
                               style: ElevatedButton.styleFrom(
