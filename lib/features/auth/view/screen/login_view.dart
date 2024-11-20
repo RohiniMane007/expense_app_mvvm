@@ -87,7 +87,59 @@ class LoginView extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      BlocBuilder<AuthBloc, AuthState>(
+                      BlocListener<AuthBloc, AuthState>(
+                        listener: (context, state) {
+                          // If login fails, show the alert dialog
+                          if (state.result == 'fail') {
+                            alertDialogBox(
+                              context,
+                              title: 'Alert',
+                              content:
+                                  const Text("Incorrect username or password."),
+                              onOkClicked: () {
+                                // Clear the text fields after showing the alert
+                                txtUser.clear();
+                                txtPass.clear();
+                              },
+                            );
+                          }
+                          // If login is successful, navigate to the ExpenseView
+                          if (state.result == 'success') {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ExpenseView()),
+                            );
+                          }
+                        },
+                        child: BlocBuilder<AuthBloc, AuthState>(
+                          builder: (context, state) {
+                            return ElevatedButton(
+                              onPressed: () {
+                                // Trigger the login event when the button is pressed
+                                BlocProvider.of<AuthBloc>(context).add(
+                                  LoginUser(
+                                    username: txtUser.text.trim(),
+                                    password: txtPass.text.trim(),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                elevation: 8,
+                                minimumSize: const Size.fromHeight(55),
+                                backgroundColor: Colors.deepOrange,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Text("Log In",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white)),
+                            );
+                          },
+                        ),
+                      ),
+                      /*BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, state) {
                           return ElevatedButton(
                               onPressed: () async {
@@ -124,7 +176,7 @@ class LoginView extends StatelessWidget {
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.white)));
                         },
-                      ),
+                      ),*/
                       const SizedBox(
                         height: 20,
                       ),

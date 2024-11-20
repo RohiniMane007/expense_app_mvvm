@@ -9,7 +9,7 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   DatabaseHelper databaseHelper = DatabaseHelper.instance;
-  AuthBloc() : super(const AuthState()) {
+  AuthBloc() : super(const AuthState(result: '')) {
     on<RegisterUser>(_register);
     on<LoginUser>(_login);
     on<LogoutUser>(_logout);
