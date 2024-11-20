@@ -117,12 +117,27 @@ class LoginView extends StatelessWidget {
                             return ElevatedButton(
                               onPressed: () {
                                 // Trigger the login event when the button is pressed
-                                BlocProvider.of<AuthBloc>(context).add(
-                                  LoginUser(
-                                    username: txtUser.text.trim(),
-                                    password: txtPass.text.trim(),
-                                  ),
-                                );
+                                if (txtUser.text.isNotEmpty &&
+                                    txtPass.text.isNotEmpty) {
+                                  BlocProvider.of<AuthBloc>(context).add(
+                                    LoginUser(
+                                      username: txtUser.text.trim(),
+                                      password: txtPass.text.trim(),
+                                    ),
+                                  );
+                                } else {
+                                  alertDialogBox(
+                                    context,
+                                    title: 'Alert',
+                                    content: const Text(
+                                        "Incorrect username or password."),
+                                    onOkClicked: () {
+                                      // Clear the text fields after showing the alert
+                                      txtUser.clear();
+                                      txtPass.clear();
+                                    },
+                                  );
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                 elevation: 8,
