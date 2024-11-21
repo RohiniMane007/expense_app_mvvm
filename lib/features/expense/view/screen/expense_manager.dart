@@ -68,7 +68,8 @@ class ExpenseHomePage extends StatelessWidget {
         text: expense != null ? expense.amount.toString() : '');
     final descriptionController =
         TextEditingController(text: expense != null ? expense.description : '');
-    DateTime selectedDate = DateTime.parse(expense!.date!) ?? DateTime.now();
+    DateTime selectedDate =
+        expense != null ? DateTime.parse(expense.date!) : DateTime.now();
 
     showDialog(
       context: context,
