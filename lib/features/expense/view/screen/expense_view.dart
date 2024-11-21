@@ -38,20 +38,13 @@ class ExpenseView extends StatelessWidget {
                       sectionsSpace: 0,
                       centerSpaceRadius: 30,
                       sections: [
+                        PieChartSectionData(value: 40, color: Colors.green),
+                        PieChartSectionData(value: 30, color: Colors.yellow),
+                        PieChartSectionData(value: 15, color: Colors.blue),
+                        PieChartSectionData(value: 10, color: Colors.red),
+                        PieChartSectionData(value: 5, color: Colors.brown),
                         PieChartSectionData(
-
-                            // titlePositionPercentageOffset: 70,
-                            // title: 'type1',
-                            value: 10,
-                            color: Colors.blue),
-                        PieChartSectionData(
-                            // title: 'type2',
-                            value: 30,
-                            color: Colors.yellow),
-                        PieChartSectionData(
-                            // title: 'type3',
-                            value: 10,
-                            color: Colors.deepOrange)
+                            value: 10, color: Colors.lightBlue[200])
                       ])),
                 ),
                 Expanded(
@@ -60,9 +53,12 @@ class ExpenseView extends StatelessWidget {
                     children: [
                       LegendsListWidget(
                         legends: [
-                          LegendData("name", Colors.red),
-                          LegendData("name", Colors.yellow),
-                          LegendData("name", Colors.orange),
+                          LegendData("Education", Colors.green),
+                          LegendData("Food", Colors.yellow),
+                          LegendData("Transport", Colors.red),
+                          LegendData("Health", Colors.blue),
+                          LegendData("Housing", Colors.brown),
+                          LegendData("other", Colors.blueGrey),
                         ],
                       ),
                     ],
