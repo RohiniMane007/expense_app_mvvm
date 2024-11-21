@@ -1,5 +1,7 @@
-import 'package:expense_app/features/expense/view/screen/expense_manager.dart';
+// import 'package:expense_app/features/expense/view/screen/expense_manager.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../core/utils/constant.dart';
 
 class AddExpense extends StatefulWidget {
   const AddExpense({super.key});
@@ -11,42 +13,45 @@ class AddExpense extends StatefulWidget {
 class _AddExpenseState extends State<AddExpense> {
   TextEditingController txtAmount = TextEditingController();
   TextEditingController txtDescription = TextEditingController();
-  TextEditingController txtDate = TextEditingController();
+  // TextEditingController txtDate = TextEditingController();
   String categoryValue = '';
+  DateTime selectedDate = DateTime.now();
 
   @override
   void dispose() {
     super.dispose();
     txtAmount.dispose();
     txtDescription.dispose();
-    txtDate.dispose();
+    // txtDate.dispose();
     categoryValue = '';
   }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.card,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 30, bottom: 30),
+    return Scaffold(
+      appBar: AppBar(),
+      // type: MaterialType.card,
+      body: Container(
+        width: 300,
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: DropdownMenu<String>(
-                    expandedInsets: const EdgeInsets.symmetric(),
-                    label: const Text("Category"),
-                    onSelected: (String? value) {
-                      categoryValue = value!;
-                    },
-                    dropdownMenuEntries: const []),
-              ),
+            Padding(
+              padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
+              child: DropdownMenu<String>(
+                  expandedInsets: const EdgeInsets.symmetric(),
+                  label: const Text("Category"),
+                  onSelected: (String? value) {
+                    categoryValue = value!;
+                  },
+                  dropdownMenuEntries:
+                      category.map<DropdownMenuEntry<String>>((String value) {
+                    return DropdownMenuEntry<String>(
+                        value: value, label: value);
+                  }).toList()),
             ),
-            Expanded(
-                child: Padding(
+            Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: TextField(
                   controller: txtAmount,
@@ -55,9 +60,8 @@ class _AddExpenseState extends State<AddExpense> {
                     labelText: 'Amount',
                     border: OutlineInputBorder(),
                   )),
-            )),
-            Expanded(
-                child: Padding(
+            ),
+            Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: TextField(
                 controller: txtDescription,
@@ -66,26 +70,28 @@ class _AddExpenseState extends State<AddExpense> {
                   border: OutlineInputBorder(),
                 ),
               ),
-            )),
-            Expanded(
-                child: Padding(
+            ),
+            Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
-              child: TextField(
-                controller: txtDate,
-                readOnly: true,
-                decoration: const InputDecoration(
-                  labelText: 'Date',
-                  prefixIcon: Icon(
-                    Icons.calendar_month_sharp,
-                    color: Color(0XFF01579b),
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                child: TextButton(
+                  child: Text(
+                    'Select Date: ${selectedDate.toLocal()}',
+                    style: const TextStyle(fontSize: 16, color: Colors.black),
                   ),
-                  border: OutlineInputBorder(),
+                  onPressed: () async {
+                    DateTime? picked = await dateTimePicker(context);
+                    if (picked != null) {
+                      selectedDate = picked;
+                    }
+                  },
                 ),
-                onTap: () async {},
               ),
-            )),
-            Expanded(
-                child: Padding(
+            ),
+            Padding(
               padding: const EdgeInsets.all(5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -118,7 +124,7 @@ class _AddExpenseState extends State<AddExpense> {
                   ),
                 ],
               ),
-            ))
+            )
           ],
         ),
       ),
