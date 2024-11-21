@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // import 'features/expense/view/screen/expense_manager.dart';
 import 'features/expense/view/screen/expense_view.dart';
+import 'features/expense/view_model/bloc/expense_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: BlocProvider(
-        create: (context) => AuthBloc(),
+        // create: (context) => AuthBloc(),
+        create: (context) => ExpenseBloc(),
         child: const ExpenseView(),
       ),
     );

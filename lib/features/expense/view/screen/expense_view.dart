@@ -2,13 +2,18 @@ import 'package:expense_app/features/expense/view/screen/add_expense.dart';
 import 'package:expense_app/features/expense/view/widget/legend.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+
+import '../../../../core/utils/constant.dart';
+import '../../view_model/bloc/expense_bloc.dart';
 
 class ExpenseView extends StatelessWidget {
   const ExpenseView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<ExpenseBloc>(context).add(ExpenseListEvent());
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -82,90 +87,100 @@ class ExpenseView extends StatelessWidget {
               decoration: const BoxDecoration(color: Colors.amber),
               width: MediaQuery.sizeOf(context).width,
               // height: 250,
-              child: ListView.separated(
-                separatorBuilder: (context, index) {
-                  return const SizedBox(
-                    height: 10,
-                  );
-                },
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 3,
-                    shadowColor: Colors.orange,
-                    color: Colors.white,
-                    margin: const EdgeInsets.only(right: 10, left: 10),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Container(
-                      padding: const EdgeInsets.only(right: 10),
-                      height: 80,
-                      child: Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              // padding: const EdgeInsets.only(left: 10),
-                              width: 35,
-                              height: 35,
-                              child:
-                                  const CircleAvatar(child: Icon(Icons.home)),
-                            ),
-                          ),
-                          const Expanded(
-                            flex: 3,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Text(
-                                    "Educatiom",
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 20),
-                                  child: SizedBox(
-                                    width: 50,
-                                    child: Text(
-                                      "description",
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          const Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+              child: BlocBuilder<ExpenseBloc, ExpenseState>(
+                builder: (context, state) {
+                  return ListView.separated(
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        height: 10,
+                      );
+                    },
+                    itemCount: state.expenseList.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 3,
+                        shadowColor: Colors.orange,
+                        color: Colors.white,
+                        margin: const EdgeInsets.only(right: 10, left: 10),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Container(
+                          padding: const EdgeInsets.only(right: 10),
+                          height: 80,
+                          child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 10, right: 20),
-                                child: Text(
-                                  "100000",
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  // padding: const EdgeInsets.only(left: 10),
+                                  width: 35,
+                                  height: 35,
+                                  child: CircleAvatar(
+                                      child: Image.asset(iconList[state
+                                          .expenseList[index].category!]!)),
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(bottom: 20, right: 20),
-                                child: Text(
-                                  "sub",
+                              Expanded(
+                                flex: 3,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Text(
+                                        state.expenseList[index].category!,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: SizedBox(
+                                        width: 50,
+                                        child: Text(
+                                          state.expenseList[index].description!,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              )
+                              ),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10, right: 20),
+                                    child: Text(
+                                      state.expenseList[index].amount!,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 20, right: 20),
+                                    child: Text(
+                                      state.expenseList[index].date!,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              // Row(
+                              //   children: [
+                              //     IconButton(
+                              //         onPressed: () async {},
+                              //         icon: const Icon(Icons.edit)),
+                              //   ],
+                              // )
                             ],
                           ),
-                          // Row(
-                          //   children: [
-                          //     IconButton(
-                          //         onPressed: () async {},
-                          //         icon: const Icon(Icons.edit)),
-                          //   ],
-                          // )
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   );
                 },
               ),
@@ -176,7 +191,10 @@ class ExpenseView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return AddExpense();
+            return BlocProvider(
+              create: (context) => ExpenseBloc(),
+              child: const AddExpense(),
+            );
           }));
         },
         shape: const CircleBorder(),

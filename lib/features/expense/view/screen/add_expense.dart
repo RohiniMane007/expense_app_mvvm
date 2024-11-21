@@ -1,5 +1,7 @@
 // import 'package:expense_app/features/expense/view/screen/expense_manager.dart';
+import 'package:expense_app/features/expense/view_model/bloc/expense_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/constant.dart';
 
@@ -32,8 +34,7 @@ class _AddExpenseState extends State<AddExpense> {
         appBar: AppBar(),
         // type: MaterialType.card,
         body: Center(
-            child: Container(
-                // alignment: Alignment.center,
+            child: SizedBox(
                 width: 300,
                 height: 600,
                 child: Column(
@@ -114,7 +115,13 @@ class _AddExpenseState extends State<AddExpense> {
                                         foregroundColor: Colors.white),
                                     child: const Text("Add"),
                                     onPressed: () async {
-                                      String? res =
+                                      BlocProvider.of<ExpenseBloc>(context).add(
+                                          ExpenseAddEvent(
+                                              category: categoryValue,
+                                              amount: txtAmount.text,
+                                              description: txtDescription.text,
+                                              date: txtDate.text));
+                                      /*String? res =
                                           await showAdaptiveDialog<String>(
                                               context: context,
                                               builder: (context) {
@@ -135,7 +142,7 @@ class _AddExpenseState extends State<AddExpense> {
                                       if (res == 'ok') {
                                         if (!context.mounted) return;
                                         Navigator.of(context).pop();
-                                      }
+                                      }*/
                                     })
                               ]))
                     ]))));

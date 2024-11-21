@@ -10,10 +10,15 @@ abstract class ExpenseEvent extends Equatable {
 class ExpenseListEvent extends ExpenseEvent {}
 
 class ExpenseAddEvent extends ExpenseEvent {
-  final Expense expense;
-  const ExpenseAddEvent({
-    required this.expense,
-  });
+  final String category, amount, description, date;
+  // final Expense expense;
+  const ExpenseAddEvent(
+      {required this.category,
+      required this.amount,
+      required this.description,
+      required this.date
+      // required this.expense,
+      });
 }
 
 class ExpenseUpdateEvent extends ExpenseEvent {

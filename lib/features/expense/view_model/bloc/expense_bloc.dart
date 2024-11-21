@@ -8,54 +8,65 @@ part 'expense_event.dart';
 part 'expense_state.dart';
 
 class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
+  DatabaseHelper databaseHelper = DatabaseHelper.instance;
   ExpenseBloc() : super(const ExpenseState()) {
     // on<ExpenseEvent>((event, emit) {});
-    DatabaseHelper databaseHelper = DatabaseHelper.instance;
-    on<ExpenseListEvent>((event, emit) async {
-      List<Map<String, dynamic>> res =
-          await ExpenseService.getItems(await databaseHelper.database);
 
-      List<Expense> expenseList =
-          res.map((item) => Expense.fromJson(item)).toList();
+    on<ExpenseListEvent>(_listExpense);
+    on<ExpenseAddEvent>(_addExpense);
+    on<ExpenseUpdateEvent>(_updateExpense);
+    on<ExpenseDeleteEvent>(_deleteExpense);
+  }
 
-      emit(state.copyWith(expenseList: expenseList));
-    });
+  void _listExpense(event, emit) async {
+    List<Map<String, dynamic>> res =
+        await ExpenseService.getItems(await databaseHelper.database);
 
-    on<ExpenseAddEvent>((event, emit) async {
-      await ExpenseService.insertItem(
-          await databaseHelper.database, event.expense);
+    List<Expense> expenseList =
+        res.map((item) => Expense.fromJson(item)).toList();
 
-      List<Map<String, dynamic>> res =
-          await ExpenseService.getItems(await databaseHelper.database);
+    emit(state.copyWith(expenseList: expenseList));
+  }
 
-      List<Expense> expenseList =
-          res.map((item) => Expense.fromJson(item)).toList();
+  void _addExpense(ExpenseAddEvent event, Emitter<ExpenseState> emit) async {
+    await ExpenseService.insertItem(
+        await databaseHelper.database,
+        Expense(
+            category: event.category,
+            amount: event.amount,
+            date: event.date,
+            description: event.description));
 
-      emit(state.copyWith(expenseList: expenseList));
-    });
+    List<Map<String, dynamic>> res =
+        await ExpenseService.getItems(await databaseHelper.database);
 
-    on<ExpenseUpdateEvent>((event, emit) async {
-      await ExpenseService.updateItem(
-          await databaseHelper.database, event.expense);
+    List<Expense> expenseList =
+        res.map((item) => Expense.fromJson(item)).toList();
+    print(expenseList);
+    emit(state.copyWith(expenseList: expenseList));
+  }
 
-      List<Map<String, dynamic>> res =
-          await ExpenseService.getItems(await databaseHelper.database);
+  void _updateExpense(event, emit) async {
+    await ExpenseService.updateItem(
+        await databaseHelper.database, event.expense);
 
-      List<Expense> expenseList =
-          res.map((item) => Expense.fromJson(item)).toList();
+    List<Map<String, dynamic>> res =
+        await ExpenseService.getItems(await databaseHelper.database);
 
-      emit(state.copyWith(expenseList: expenseList));
-    });
+    List<Expense> expenseList =
+        res.map((item) => Expense.fromJson(item)).toList();
 
-    on<ExpenseDeleteEvent>((event, emit) async {
-      await ExpenseService.deleteItem(await databaseHelper.database, event.id);
-      List<Map<String, dynamic>> res =
-          await ExpenseService.getItems(await databaseHelper.database);
+    emit(state.copyWith(expenseList: expenseList));
+  }
 
-      List<Expense> expenseList =
-          res.map((item) => Expense.fromJson(item)).toList();
+  void _deleteExpense(event, emit) async {
+    await ExpenseService.deleteItem(await databaseHelper.database, event.id);
+    List<Map<String, dynamic>> res =
+        await ExpenseService.getItems(await databaseHelper.database);
 
-      emit(state.copyWith(expenseList: expenseList));
-    });
+    List<Expense> expenseList =
+        res.map((item) => Expense.fromJson(item)).toList();
+
+    emit(state.copyWith(expenseList: expenseList));
   }
 }
