@@ -10,7 +10,7 @@ Future<DateTime?> dateTimePicker(BuildContext context) {
       initialEntryMode: DatePickerEntryMode.calendarOnly);
 }
 
-List<String> category = [
+List<String> categoryList = [
   'Education',
   'Food',
   'Transport',
@@ -25,5 +25,5 @@ Map<String, String> iconList = {
   'Transport': 'assets/icons/transport.png',
   'Health': 'assets/icons/health.png',
   'Housing': 'assets/icons/house.png',
-  'Other': 'assets/icons/food.png'
+  'Other': 'assets/icons/other.png'
 };

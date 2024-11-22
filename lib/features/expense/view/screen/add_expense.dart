@@ -6,8 +6,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/constant.dart';
 
 class AddExpense extends StatefulWidget {
-  const AddExpense({super.key});
-
+  const AddExpense(
+      {super.key,
+      this.id,
+      this.amount,
+      this.description,
+      this.date,
+      this.category});
+  final String? amount, description, date, category;
+  final int? id;
   @override
   State<AddExpense> createState() => _AddExpenseState();
 }
@@ -16,8 +23,18 @@ class _AddExpenseState extends State<AddExpense> {
   TextEditingController txtAmount = TextEditingController();
   TextEditingController txtDescription = TextEditingController();
   TextEditingController txtDate = TextEditingController();
-  String categoryValue = '';
+  TextEditingController category = TextEditingController();
   DateTime selectedDate = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    // widget.id ?? 0;
+    txtAmount.text = widget.amount ?? "";
+    txtDescription.text = widget.description ?? "";
+    txtDate.text = widget.date ?? "";
+    category.text = widget.category ?? "";
+  }
 
   @override
   void dispose() {
@@ -25,7 +42,7 @@ class _AddExpenseState extends State<AddExpense> {
     txtAmount.dispose();
     txtDescription.dispose();
     txtDate.dispose();
-    categoryValue = '';
+    category.dispose();
   }
 
   @override
@@ -44,12 +61,13 @@ class _AddExpenseState extends State<AddExpense> {
                       Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: DropdownMenu<String>(
+                              controller: category,
                               expandedInsets: const EdgeInsets.symmetric(),
                               label: const Text("Category"),
                               onSelected: (String? value) {
-                                categoryValue = value!;
+                                // categoryValue = value!;
                               },
-                              dropdownMenuEntries: category
+                              dropdownMenuEntries: categoryList
                                   .map<DropdownMenuEntry<String>>(
                                       (String value) {
                                 return DropdownMenuEntry<String>(
@@ -117,11 +135,12 @@ class _AddExpenseState extends State<AddExpense> {
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.teal,
                                         foregroundColor: Colors.white),
-                                    child: const Text("Add"),
+                                    child: Text(
+                                        widget.id == null ? "Add" : "Update"),
                                     onPressed: () async {
                                       BlocProvider.of<ExpenseBloc>(context).add(
                                           ExpenseAddEvent(
-                                              category: categoryValue,
+                                              category: category.text,
                                               amount: txtAmount.text,
                                               description: txtDescription.text,
                                               date: txtDate.text));
@@ -145,7 +164,7 @@ class _AddExpenseState extends State<AddExpense> {
 
                                       if (res == 'ok') {
                                         if (!context.mounted) return;
-                                        categoryValue = "";
+                                        category.clear();
                                         txtAmount.clear();
                                         txtDescription.clear();
                                         txtDate.clear();
