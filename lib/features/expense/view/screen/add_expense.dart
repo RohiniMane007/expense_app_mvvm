@@ -107,7 +107,11 @@ class _AddExpenseState extends State<AddExpense> {
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.teal,
                                         foregroundColor: Colors.white),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      BlocProvider.of<ExpenseBloc>(context)
+                                          .add(ExpenseListEvent());
+                                      Navigator.of(context).pop();
+                                    },
                                     child: const Text("Cancel")),
                                 ElevatedButton(
                                     style: ElevatedButton.styleFrom(
@@ -121,7 +125,7 @@ class _AddExpenseState extends State<AddExpense> {
                                               amount: txtAmount.text,
                                               description: txtDescription.text,
                                               date: txtDate.text));
-                                      /*String? res =
+                                      String? res =
                                           await showAdaptiveDialog<String>(
                                               context: context,
                                               builder: (context) {
@@ -141,8 +145,12 @@ class _AddExpenseState extends State<AddExpense> {
 
                                       if (res == 'ok') {
                                         if (!context.mounted) return;
-                                        Navigator.of(context).pop();
-                                      }*/
+                                        categoryValue = "";
+                                        txtAmount.clear();
+                                        txtDescription.clear();
+                                        txtDate.clear();
+                                        // Navigator.of(context).pop();
+                                      }
                                     })
                               ]))
                     ]))));

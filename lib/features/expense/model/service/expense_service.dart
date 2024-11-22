@@ -11,7 +11,7 @@ class ExpenseService {
   }
 
   static Future<List<Map<String, dynamic>>> getItems(Database db) async {
-    return await db.query('expenses');
+    return await db.query('expenses', orderBy: 'date desc');
   }
 
   static Future<void> updateItem(Database db, Expense item) async {

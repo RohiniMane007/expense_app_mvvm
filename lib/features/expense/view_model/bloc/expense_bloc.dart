@@ -59,7 +59,8 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     emit(state.copyWith(expenseList: expenseList));
   }
 
-  void _deleteExpense(event, emit) async {
+  void _deleteExpense(
+      ExpenseDeleteEvent event, Emitter<ExpenseState> emit) async {
     await ExpenseService.deleteItem(await databaseHelper.database, event.id);
     List<Map<String, dynamic>> res =
         await ExpenseService.getItems(await databaseHelper.database);
