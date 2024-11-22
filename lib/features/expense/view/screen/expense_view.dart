@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/utils/constant.dart';
 import '../../view_model/bloc/expense_bloc.dart';
+import 'expense_all.dart';
 
 class ExpenseView extends StatelessWidget {
   const ExpenseView({super.key});
@@ -74,7 +75,16 @@ class ExpenseView extends StatelessWidget {
                 padding: EdgeInsets.only(left: 10),
                 child: Text("Recents"),
               ),
-              TextButton(onPressed: () {}, child: const Text("See All >"))
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return BlocProvider.value(
+                        value: BlocProvider.of<ExpenseBloc>(context),
+                        child: const ExpenseAll(),
+                      );
+                    }));
+                  },
+                  child: const Text("See All >"))
             ],
           ),
           Expanded(
@@ -91,7 +101,9 @@ class ExpenseView extends StatelessWidget {
                         height: 10,
                       );
                     },
-                    itemCount: state.expenseList.length,
+                    itemCount: state.expenseList.length >= 4
+                        ? 4
+                        : state.expenseList.length,
                     itemBuilder: (context, index) {
                       return Dismissible(
                         key: Key(state.expenseList[index].toString()),
