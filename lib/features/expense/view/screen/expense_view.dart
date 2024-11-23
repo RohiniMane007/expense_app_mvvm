@@ -27,26 +27,43 @@ class ExpenseView extends StatelessWidget {
             ],
           ),
           Container(
-            padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(color: Colors.tealAccent),
-            width: MediaQuery.sizeOf(context).width,
-            height: 200,
-            child: Row(
+              padding: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(color: Colors.tealAccent),
+              width: MediaQuery.sizeOf(context).width,
+              height: 200,
+              child: BlocBuilder<ExpenseBloc, ExpenseState>(
+                builder: (context, state) {
+                  return Card(
+                    child: Text(state.expenseList
+                        .fold<double>(
+                            0,
+                            (sum, item) =>
+                                sum + double.parse(item.amount.toString()))
+                        .toString()),
+                  );
+                },
+              )
+              /* Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                  child: PieChart(PieChartData(
-                      sectionsSpace: 0,
-                      centerSpaceRadius: 30,
-                      sections: [
-                        PieChartSectionData(value: 40, color: Colors.green),
-                        PieChartSectionData(value: 30, color: Colors.yellow),
-                        PieChartSectionData(value: 15, color: Colors.blue),
-                        PieChartSectionData(value: 10, color: Colors.red),
-                        PieChartSectionData(value: 5, color: Colors.brown),
-                        PieChartSectionData(
-                            value: 10, color: Colors.lightBlue[200])
-                      ])),
+                  child: BlocBuilder<ExpenseBloc, ExpenseState>(
+                    builder: (context, state) {
+                      return PieChart(PieChartData(
+                          sectionsSpace: 0,
+                          centerSpaceRadius: 30,
+                          sections: [
+                            PieChartSectionData(value: 30, color: Colors.green),
+                            PieChartSectionData(
+                                value: 30, color: Colors.yellow),
+                            PieChartSectionData(value: 15, color: Colors.blue),
+                            PieChartSectionData(value: 10, color: Colors.red),
+                            PieChartSectionData(value: 5, color: Colors.brown),
+                            PieChartSectionData(
+                                value: 10, color: Colors.lightBlue[200])
+                          ]));
+                    },
+                  ),
                 ),
                 Expanded(
                   child: Column(
@@ -66,8 +83,8 @@ class ExpenseView extends StatelessWidget {
                   ),
                 )
               ],
-            ),
-          ),
+            ),*/
+              ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

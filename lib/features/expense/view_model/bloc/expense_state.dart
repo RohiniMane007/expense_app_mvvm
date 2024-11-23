@@ -11,10 +11,14 @@ final class ExpenseInitial extends ExpenseState {}*/
 
 class ExpenseState extends Equatable {
   final List<Expense> expenseList;
-  const ExpenseState({this.expenseList = const []});
+  final List<Map<String, double>> ratio;
+  const ExpenseState({this.expenseList = const [], this.ratio = const []});
 
-  ExpenseState copyWith({List<Expense>? expenseList}) {
-    return ExpenseState(expenseList: expenseList ?? this.expenseList);
+  ExpenseState copyWith(
+      {List<Expense>? expenseList, List<Map<String, double>>? ratio}) {
+    return ExpenseState(
+        expenseList: expenseList ?? this.expenseList,
+        ratio: ratio ?? this.ratio);
   }
 
   @override

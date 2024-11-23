@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:expense_app/features/expense/model/model.dart';
 
 import '../../../../core/db/database_helper.dart';
+import '../../../../core/utils/constant.dart';
 
 part 'expense_event.dart';
 part 'expense_state.dart';
@@ -23,9 +24,23 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     // await ExpenseService.deleteItem(await databaseHelper.database, 17);
     List<Map<String, dynamic>> res =
         await ExpenseService.getItems(await databaseHelper.database);
-
     List<Expense> expenseList =
         res.map((item) => Expense.fromJson(item)).toList();
+
+    List<Map<String, double>> ratio = [];
+    categoryList.map((i) {
+      double totalExpense = expenseList.fold(
+          0, (sum, item) => sum + double.parse(item.amount.toString()));
+
+      double foodExpense = expenseList
+          .where((expense) => expense.category == i)
+          .fold(0, (sum, item) => sum + double.parse(item.amount.toString()));
+
+      // Calculate the percentage of "Food" expense
+      double value = double.parse(
+          ((foodExpense / totalExpense) * 100).toStringAsPrecision(2));
+      ratio.add({i: value});
+    });
 
     emit(state.copyWith(expenseList: expenseList));
   }
