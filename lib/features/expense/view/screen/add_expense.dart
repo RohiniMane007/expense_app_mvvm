@@ -24,8 +24,8 @@ class _AddExpenseState extends State<AddExpense> {
   TextEditingController txtDescription = TextEditingController();
   TextEditingController txtDate = TextEditingController();
   TextEditingController category = TextEditingController();
-  DateTime selectedDate = DateTime.now();
   final formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -156,38 +156,65 @@ class _AddExpenseState extends State<AddExpense> {
                                       child: Text(
                                           widget.id == null ? "Add" : "Update"),
                                       onPressed: () async {
-                                        // BlocProvider.of<ExpenseBloc>(context)
-                                        //     .add(ExpenseAddEvent(
-                                        //         category: category.text,
-                                        //         amount: txtAmount.text,
-                                        //         description:
-                                        //             txtDescription.text,
-                                        //         date: txtDate.text));
-                                        String? res = await showAdaptiveDialog<
-                                                String>(
-                                            context: context,
-                                            builder: (context) {
-                                              return AlertDialog.adaptive(
-                                                title: const Text(
-                                                    "Successfully Added"),
-                                                actions: [
-                                                  TextButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop("ok");
-                                                      },
-                                                      child: const Text("OK"))
-                                                ],
-                                              );
-                                            });
+                                        if (formKey.currentState!.validate() &&
+                                            category.text != "") {
+                                          widget.id == null
+                                              ? BlocProvider.of<
+                                                      ExpenseBloc>(context)
+                                                  .add(ExpenseAddEvent(
+                                                      category: category.text,
+                                                      amount: txtAmount.text,
+                                                      description:
+                                                          txtDescription.text,
+                                                      date: txtDate.text))
+                                              : BlocProvider.of<
+                                                      ExpenseBloc>(context)
+                                                  .add(ExpenseUpdateEvent(
+                                                      id: widget.id!,
+                                                      category: category.text,
+                                                      amount: txtAmount.text,
+                                                      description:
+                                                          txtDescription.text,
+                                                      date: txtDate.text));
+                                          String? res =
+                                              await showAdaptiveDialog<String>(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog.adaptive(
+                                                      title: Text(widget.id ==
+                                                              null
+                                                          ? "Successfully Added"
+                                                          : "Successfully Updated"),
+                                                      actions: [
+                                                        TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop("ok");
+                                                            },
+                                                            child: const Text(
+                                                                "OK"))
+                                                      ],
+                                                    );
+                                                  });
 
-                                        if (res == 'ok') {
-                                          if (!context.mounted) return;
-                                          category.clear();
-                                          txtAmount.clear();
-                                          txtDescription.clear();
-                                          txtDate.clear();
-                                          // Navigator.of(context).pop();
+                                          if (res == 'ok') {
+                                            if (!context.mounted) return;
+                                            category.clear();
+                                            txtAmount.clear();
+                                            txtDescription.clear();
+                                            txtDate.clear();
+
+                                            if (widget.id != null) {
+                                              Navigator.of(context).pop();
+                                            }
+                                          }
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  backgroundColor: Colors.red,
+                                                  content:
+                                                      Text("Select Category")));
                                         }
                                       })
                                 ]))

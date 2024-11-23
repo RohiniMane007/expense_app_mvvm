@@ -16,9 +16,10 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     on<ExpenseAddEvent>(_addExpense);
     on<ExpenseUpdateEvent>(_updateExpense);
     on<ExpenseDeleteEvent>(_deleteExpense);
+    on<ExpenseFilterListEvent>(_filterExpense);
   }
 
-  void _listExpense(event, emit) async {
+  void _listExpense(ExpenseListEvent event, Emitter<ExpenseState> emit) async {
     // await ExpenseService.deleteItem(await databaseHelper.database, 17);
     List<Map<String, dynamic>> res =
         await ExpenseService.getItems(await databaseHelper.database);
@@ -50,7 +51,13 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
   void _updateExpense(
       ExpenseUpdateEvent event, Emitter<ExpenseState> emit) async {
     await ExpenseService.updateItem(
-        await databaseHelper.database, event.expense);
+        await databaseHelper.database,
+        Expense(
+            id: event.id,
+            category: event.category,
+            amount: event.amount,
+            date: event.date,
+            description: event.description));
 
     List<Map<String, dynamic>> res =
         await ExpenseService.getItems(await databaseHelper.database);
@@ -66,6 +73,20 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     await ExpenseService.deleteItem(await databaseHelper.database, event.id);
     List<Map<String, dynamic>> res =
         await ExpenseService.getItems(await databaseHelper.database);
+
+    List<Expense> expenseList =
+        res.map((item) => Expense.fromJson(item)).toList();
+
+    emit(state.copyWith(expenseList: expenseList));
+  }
+
+  void _filterExpense(
+      ExpenseFilterListEvent event, Emitter<ExpenseState> emit) async {
+    // await ExpenseService.deleteItem(await databaseHelper.database, 17);
+    List<Map<String, dynamic>> res = await ExpenseService.getRecordsByWeek(
+        await databaseHelper.database,
+        week: event.week,
+        year: event.year);
 
     List<Expense> expenseList =
         res.map((item) => Expense.fromJson(item)).toList();

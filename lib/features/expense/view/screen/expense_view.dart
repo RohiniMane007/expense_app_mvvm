@@ -84,7 +84,7 @@ class ExpenseView extends StatelessWidget {
                       );
                     }));
                   },
-                  child: const Text("See All >"))
+                  child: const Text("See All >>"))
             ],
           ),
           Expanded(

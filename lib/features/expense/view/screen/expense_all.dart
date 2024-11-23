@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/utils/constant.dart';
 import '../../view_model/bloc/expense_bloc.dart';
@@ -21,8 +22,34 @@ class ExpenseAll extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                TextButton(onPressed: () {}, child: const Text("Week")),
-                TextButton(onPressed: () {}, child: const Text("Month")),
+                TextButton(
+                    onPressed: () {
+                      DateTime today = DateTime.now();
+
+                      // Get the start of the current week (Monday)
+                      DateTime startOfWeek =
+                          getStartOfWeek(today).add(const Duration(days: 6));
+
+                      print("week:${getWeekNumber(today)}");
+
+                      BlocProvider.of<ExpenseBloc>(context).add(
+                          ExpenseFilterListEvent(
+                              week: getWeekNumber(today), year: today.year));
+                    },
+                    child: const Text("Week")),
+                TextButton(
+                    onPressed: () {
+                      DateTime now = DateTime.now();
+
+                      DateTime firstDayOfMonth =
+                          DateTime(now.year, now.month, 1);
+
+                      DateTime lastDayOfMonth =
+                          DateTime(now.year, now.month + 1, 0);
+
+                      print("$firstDayOfMonth - $lastDayOfMonth");
+                    },
+                    child: const Text("Month")),
                 TextButton(onPressed: () {}, child: const Text("Year")),
               ],
             ),
@@ -170,4 +197,25 @@ class ExpenseAll extends StatelessWidget {
       ),
     );
   }
+}
+
+DateTime getStartOfWeek(DateTime date) {
+  // Get the difference from Monday
+  int difference = date.weekday - DateTime.monday;
+
+  // Adjust the date to get Monday of the current week
+  return date.subtract(Duration(days: difference));
+}
+
+int getWeekNumber(DateTime date) {
+  DateTime firstDayOfYear = DateTime(date.year, 1, 1);
+
+  // Calculate the difference in days between the current date and the first day of the year
+  int daysDifference = date.difference(firstDayOfYear).inDays;
+
+  // Calculate the week number
+  int weekNumber =
+      (daysDifference / 7).floor() + 1; // Adding 1 because week starts from 1
+
+  return weekNumber;
 }
