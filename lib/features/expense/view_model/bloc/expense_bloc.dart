@@ -83,14 +83,35 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
   void _filterExpense(
       ExpenseFilterListEvent event, Emitter<ExpenseState> emit) async {
     // await ExpenseService.deleteItem(await databaseHelper.database, 17);
-    List<Map<String, dynamic>> res = await ExpenseService.getRecordsByWeek(
-        await databaseHelper.database,
-        week: event.week,
-        year: event.year);
+    if (event.week != null) {
+      List<Map<String, dynamic>> res = await ExpenseService.getRecordsByWeek(
+          await databaseHelper.database,
+          week: event.week,
+          year: event.year);
 
-    List<Expense> expenseList =
-        res.map((item) => Expense.fromJson(item)).toList();
+      List<Expense> expenseList =
+          res.map((item) => Expense.fromJson(item)).toList();
 
-    emit(state.copyWith(expenseList: expenseList));
+      emit(state.copyWith(expenseList: expenseList));
+    } else if (event.month != null) {
+      List<Map<String, dynamic>> res = await ExpenseService.getRecordsByMonth(
+          await databaseHelper.database,
+          month: event.month,
+          year: event.year);
+
+      List<Expense> expenseList =
+          res.map((item) => Expense.fromJson(item)).toList();
+
+      emit(state.copyWith(expenseList: expenseList));
+    } else {
+      List<Map<String, dynamic>> res = await ExpenseService.getRecordsByYear(
+          await databaseHelper.database,
+          year: event.year);
+
+      List<Expense> expenseList =
+          res.map((item) => Expense.fromJson(item)).toList();
+
+      emit(state.copyWith(expenseList: expenseList));
+    }
   }
 }

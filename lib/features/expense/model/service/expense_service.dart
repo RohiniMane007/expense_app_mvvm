@@ -54,8 +54,8 @@ class ExpenseService {
   }
 
   // Function to get records by month
-  static Future<List<Map<String, dynamic>>> getRecordsByMonth(
-      Database db, int month, int year) async {
+  static Future<List<Map<String, dynamic>>> getRecordsByMonth(Database db,
+      {int? month, int? year}) async {
     return await db.query(
       'expenses',
       where: 'strftime("%Y", date) = ? AND strftime("%m", date) = ?',
@@ -68,8 +68,8 @@ class ExpenseService {
   }
 
   // Function to get records by year
-  static Future<List<Map<String, dynamic>>> getRecordsByYear(
-      Database db, int year) async {
+  static Future<List<Map<String, dynamic>>> getRecordsByYear(Database db,
+      {int? year}) async {
     return await db.query(
       'expenses',
       where: 'strftime("%Y", date) = ?',

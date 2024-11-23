@@ -26,12 +26,6 @@ class ExpenseAll extends StatelessWidget {
                     onPressed: () {
                       DateTime today = DateTime.now();
 
-                      // Get the start of the current week (Monday)
-                      DateTime startOfWeek =
-                          getStartOfWeek(today).add(const Duration(days: 6));
-
-                      print("week:${getWeekNumber(today)}");
-
                       BlocProvider.of<ExpenseBloc>(context).add(
                           ExpenseFilterListEvent(
                               week: getWeekNumber(today), year: today.year));
@@ -41,16 +35,17 @@ class ExpenseAll extends StatelessWidget {
                     onPressed: () {
                       DateTime now = DateTime.now();
 
-                      DateTime firstDayOfMonth =
-                          DateTime(now.year, now.month, 1);
-
-                      DateTime lastDayOfMonth =
-                          DateTime(now.year, now.month + 1, 0);
-
-                      print("$firstDayOfMonth - $lastDayOfMonth");
+                      BlocProvider.of<ExpenseBloc>(context).add(
+                          ExpenseFilterListEvent(
+                              month: now.month, year: now.year));
                     },
                     child: const Text("Month")),
-                TextButton(onPressed: () {}, child: const Text("Year")),
+                TextButton(
+                    onPressed: () {
+                      BlocProvider.of<ExpenseBloc>(context).add(
+                          ExpenseFilterListEvent(year: DateTime.now().year));
+                    },
+                    child: const Text("Year")),
               ],
             ),
           ),

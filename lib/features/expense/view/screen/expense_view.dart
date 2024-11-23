@@ -79,7 +79,8 @@ class ExpenseView extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (_) {
                       return BlocProvider.value(
-                        value: BlocProvider.of<ExpenseBloc>(context),
+                        value: BlocProvider.of<ExpenseBloc>(context)
+                          ..add(ExpenseListEvent()),
                         child: const ExpenseAll(),
                       );
                     }));
