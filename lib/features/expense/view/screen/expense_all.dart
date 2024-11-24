@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
-
 import '../../../../core/utils/constant.dart';
+import '../../../../core/utils/custom_textstyle.dart';
 import '../../view_model/bloc/expense_bloc.dart';
 import 'add_expense.dart';
 
@@ -69,7 +68,6 @@ class ExpenseAll extends StatelessWidget {
                           BlocProvider.of<ExpenseBloc>(context).add(
                               ExpenseDeleteEvent(
                                   id: state.expenseList[index].id!));
-                          // state.expenseList.removeAt(index);
 
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -104,12 +102,10 @@ class ExpenseAll extends StatelessWidget {
                               padding: const EdgeInsets.only(right: 10),
                               height: 80,
                               child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     flex: 1,
                                     child: Container(
-                                      // padding: const EdgeInsets.only(left: 10),
                                       width: 35,
                                       height: 35,
                                       child: CircleAvatar(
@@ -130,6 +126,9 @@ class ExpenseAll extends StatelessWidget {
                                               const EdgeInsets.only(top: 10),
                                           child: Text(
                                             state.expenseList[index].category!,
+                                            style:
+                                                CustomTextStyle.titleTextStyle(
+                                                    fontsize: 16),
                                           ),
                                         ),
                                         Padding(
@@ -138,10 +137,13 @@ class ExpenseAll extends StatelessWidget {
                                           child: SizedBox(
                                             width: 50,
                                             child: Text(
-                                              state.expenseList[index]
-                                                  .description!,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
+                                                state.expenseList[index]
+                                                    .description!,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: CustomTextStyle
+                                                    .subTextStyle(
+                                                        fontstyle:
+                                                            FontStyle.normal)),
                                           ),
                                         )
                                       ],
@@ -157,7 +159,9 @@ class ExpenseAll extends StatelessWidget {
                                         padding: const EdgeInsets.only(
                                             top: 10, right: 20),
                                         child: Text(
-                                          state.expenseList[index].amount!,
+                                          "\u20B9${double.parse(state.expenseList[index].amount!).toStringAsFixed(2)}",
+                                          style: CustomTextStyle.titleTextStyle(
+                                              color: Colors.deepOrange),
                                         ),
                                       ),
                                       Padding(
@@ -165,17 +169,11 @@ class ExpenseAll extends StatelessWidget {
                                             bottom: 20, right: 20),
                                         child: Text(
                                           state.expenseList[index].date!,
+                                          style: CustomTextStyle.subTextStyle(),
                                         ),
                                       )
                                     ],
                                   ),
-                                  // Row(
-                                  //   children: [
-                                  //     IconButton(
-                                  //         onPressed: () async {},
-                                  //         icon: const Icon(Icons.edit)),
-                                  //   ],
-                                  // )
                                 ],
                               ),
                             ),
