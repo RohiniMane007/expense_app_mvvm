@@ -59,7 +59,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
 
     List<Expense> expenseList =
         res.map((item) => Expense.fromJson(item)).toList();
-    print(expenseList);
+
     emit(state.copyWith(expenseList: expenseList));
   }
 

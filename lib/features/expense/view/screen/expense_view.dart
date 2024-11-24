@@ -165,91 +165,7 @@ class ExpenseView extends StatelessWidget {
                                 description:
                                     state.expenseList[index].description!,
                                 amount: state.expenseList[index].amount!,
-                                date: state.expenseList[index].date!)
-                            /*Card(
-                            elevation: 5,
-                            shadowColor: Colors.teal,
-                            color: Colors.white,
-                            margin: const EdgeInsets.only(right: 10, left: 10),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(width: 0.2),
-                                  borderRadius: BorderRadius.circular(8)),
-                              padding: const EdgeInsets.only(right: 10),
-                              height: 80,
-                              child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Container(
-                                      // padding: const EdgeInsets.only(left: 10),
-                                      width: 35,
-                                      height: 35,
-                                      child: CircleAvatar(
-                                          child: Image.asset(iconList[state
-                                              .expenseList[index].category!]!)),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: Text(
-                                            state.expenseList[index].category!,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 20),
-                                          child: SizedBox(
-                                            width: 50,
-                                            child: Text(
-                                              state.expenseList[index]
-                                                  .description!,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 10, right: 20),
-                                        child: Text(
-                                          state.expenseList[index].amount!,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            bottom: 20, right: 20),
-                                        child: Text(
-                                          state.expenseList[index].date!,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),*/
-                            );
+                                date: state.expenseList[index].date!));
                       },
                     );
                   },
@@ -261,6 +177,7 @@ class ExpenseView extends StatelessWidget {
         floatingActionButtonLocation:
             FloatingActionButtonLocation.miniCenterDocked,
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.orange,
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (_) {
               return BlocProvider.value(
@@ -287,13 +204,11 @@ class ExpenseView extends StatelessWidget {
                     Icons.home,
                     color: Colors.white,
                   ),
-                  onPressed: () {
-                    // BlocProvider.of<ExpenseBloc>(context)
-                    //     .add(ExpenseListEvent());
-                  },
+                  onPressed: () {},
                 ),
                 IconButton(
-                  icon: const Icon(Icons.search, color: Colors.white),
+                  icon:
+                      const Icon(Icons.pie_chart_rounded, color: Colors.white),
                   onPressed: () {},
                 ),
               ],

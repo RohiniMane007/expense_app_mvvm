@@ -49,7 +49,6 @@ class _AddUpdateExpenseState extends State<AddUpdateExpense> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
-        // type: MaterialType.card,
         body: Center(
             child: SizedBox(
                 width: 400,
@@ -63,7 +62,7 @@ class _AddUpdateExpenseState extends State<AddUpdateExpense> {
                         child: TextFormField(
                             controller: txtAmount,
                             validator: (value) {
-                              return (value != null && value.isEmpty)
+                              return (value == null || value.isEmpty)
                                   ? 'Enter amount'
                                   : null;
                             },
@@ -93,7 +92,7 @@ class _AddUpdateExpenseState extends State<AddUpdateExpense> {
                       child: TextFormField(
                         controller: txtDescription,
                         validator: (value) {
-                          return (value != null && value.isEmpty)
+                          return (value == null || value.isEmpty)
                               ? 'Enter description'
                               : null;
                         },
@@ -109,7 +108,7 @@ class _AddUpdateExpenseState extends State<AddUpdateExpense> {
                         child: TextFormField(
                             controller: txtDate,
                             validator: (value) {
-                              return (value != null && value.isEmpty)
+                              return (value == null || value.isEmpty)
                                   ? 'Enter date'
                                   : null;
                             },

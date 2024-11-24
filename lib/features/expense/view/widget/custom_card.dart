@@ -30,7 +30,7 @@ class CustomCard extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-              child: Container(
+              child: SizedBox(
                 width: 35,
                 height: 35,
                 child: CircleAvatar(
