@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/constant.dart';
 import '../../../../core/utils/custom_textstyle.dart';
 import '../../view_model/bloc/expense_bloc.dart';
+import '../widget/custom_card.dart';
 import 'add_expense.dart';
 
 class ExpenseAll extends StatelessWidget {
@@ -91,7 +92,15 @@ class ExpenseAll extends StatelessWidget {
                               );
                             }));
                           },
-                          child: Card(
+                          child: CustomCard(
+                              image:
+                                  iconList[state.expenseList[index].category!]!,
+                              category: state.expenseList[index].category!,
+                              description:
+                                  state.expenseList[index].description!,
+                              amount: state.expenseList[index].amount!,
+                              date: state.expenseList[index].date!),
+                          /*Card(
                             elevation: 3,
                             shadowColor: Colors.orange,
                             color: Colors.white,
@@ -177,7 +186,7 @@ class ExpenseAll extends StatelessWidget {
                                 ],
                               ),
                             ),
-                          ),
+                          ),*/
                         ),
                       );
                     },

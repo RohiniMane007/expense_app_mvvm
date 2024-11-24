@@ -1,4 +1,5 @@
 import 'package:expense_app/features/expense/view/screen/add_expense.dart';
+import 'package:expense_app/features/expense/view/widget/custom_card.dart';
 // import 'package:expense_app/features/expense/view/widget/legend.dart';
 // import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -147,17 +148,25 @@ class ExpenseView extends StatelessWidget {
                           : state.expenseList.length,
                       itemBuilder: (context, index) {
                         return Dismissible(
-                          key: Key(state.expenseList[index].toString()),
-                          onDismissed: (direction) {
-                            BlocProvider.of<ExpenseBloc>(context).add(
-                                ExpenseDeleteEvent(
-                                    id: state.expenseList[index].id!));
-                            // state.expenseList.removeAt(index);
+                            key: Key(state.expenseList[index].toString()),
+                            onDismissed: (direction) {
+                              BlocProvider.of<ExpenseBloc>(context).add(
+                                  ExpenseDeleteEvent(
+                                      id: state.expenseList[index].id!));
+                              // state.expenseList.removeAt(index);
 
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Deleted")));
-                          },
-                          child: Card(
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text("Deleted")));
+                            },
+                            child: CustomCard(
+                                image: iconList[
+                                    state.expenseList[index].category!]!,
+                                category: state.expenseList[index].category!,
+                                description:
+                                    state.expenseList[index].description!,
+                                amount: state.expenseList[index].amount!,
+                                date: state.expenseList[index].date!)
+                            /*Card(
                             elevation: 5,
                             shadowColor: Colors.teal,
                             color: Colors.white,
@@ -239,8 +248,8 @@ class ExpenseView extends StatelessWidget {
                                 ],
                               ),
                             ),
-                          ),
-                        );
+                          ),*/
+                            );
                       },
                     );
                   },
