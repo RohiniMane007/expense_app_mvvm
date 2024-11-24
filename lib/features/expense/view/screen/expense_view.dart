@@ -1,6 +1,6 @@
 import 'package:expense_app/features/expense/view/screen/add_expense.dart';
-import 'package:expense_app/features/expense/view/widget/legend.dart';
-import 'package:fl_chart/fl_chart.dart';
+// import 'package:expense_app/features/expense/view/widget/legend.dart';
+// import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -27,13 +27,26 @@ class ExpenseView extends StatelessWidget {
             ],
           ),
           Container(
-              padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(color: Colors.tealAccent),
+              padding: const EdgeInsets.all(30),
+              // decoration: const BoxDecoration(color: Colors.tealAccent),
               width: MediaQuery.sizeOf(context).width,
               height: 200,
               child: BlocBuilder<ExpenseBloc, ExpenseState>(
                 builder: (context, state) {
-                  return Card(
+                  return AnimatedContainer(
+                    curve: Curves.bounceIn,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black, width: 0.1),
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.teal,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black26.withOpacity(0.8),
+                            spreadRadius: 5,
+                            offset: const Offset(5, 5),
+                          )
+                        ]),
+                    duration: const Duration(seconds: 4),
                     child: Text(state.expenseList
                         .fold<double>(
                             0,
