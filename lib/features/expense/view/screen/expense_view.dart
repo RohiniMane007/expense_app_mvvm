@@ -1,4 +1,4 @@
-import 'package:expense_app/features/expense/view/screen/add_expense.dart';
+import 'package:expense_app/features/expense/view/screen/add_update_expense.dart';
 import 'package:expense_app/features/expense/view/widget/custom_card.dart';
 // import 'package:expense_app/features/expense/view/widget/legend.dart';
 // import 'package:fl_chart/fl_chart.dart';
@@ -265,7 +265,7 @@ class ExpenseView extends StatelessWidget {
             Navigator.push(context, MaterialPageRoute(builder: (_) {
               return BlocProvider.value(
                 value: BlocProvider.of<ExpenseBloc>(context),
-                child: const AddExpense(),
+                child: const AddUpdateExpense(),
               );
             }));
           },

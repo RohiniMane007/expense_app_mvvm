@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/constant.dart';
-import '../../../../core/utils/custom_textstyle.dart';
 import '../../view_model/bloc/expense_bloc.dart';
 import '../widget/custom_card.dart';
-import 'add_expense.dart';
+import 'add_update_expense.dart';
 
 class ExpenseAll extends StatelessWidget {
   const ExpenseAll({super.key});
@@ -58,7 +57,7 @@ class ExpenseAll extends StatelessWidget {
                   return ListView.separated(
                     separatorBuilder: (context, index) {
                       return const SizedBox(
-                        height: 10,
+                        height: 15,
                       );
                     },
                     itemCount: state.expenseList.length,
@@ -81,7 +80,7 @@ class ExpenseAll extends StatelessWidget {
                                 MaterialPageRoute(builder: (_) {
                               return BlocProvider.value(
                                 value: BlocProvider.of<ExpenseBloc>(context),
-                                child: AddExpense(
+                                child: AddUpdateExpense(
                                   id: state.expenseList[index].id,
                                   amount: state.expenseList[index].amount,
                                   description:
@@ -100,93 +99,6 @@ class ExpenseAll extends StatelessWidget {
                                   state.expenseList[index].description!,
                               amount: state.expenseList[index].amount!,
                               date: state.expenseList[index].date!),
-                          /*Card(
-                            elevation: 3,
-                            shadowColor: Colors.orange,
-                            color: Colors.white,
-                            margin: const EdgeInsets.only(right: 10, left: 10),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Container(
-                              padding: const EdgeInsets.only(right: 10),
-                              height: 80,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Container(
-                                      width: 35,
-                                      height: 35,
-                                      child: CircleAvatar(
-                                          child: Image.asset(iconList[state
-                                              .expenseList[index].category!]!)),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: Text(
-                                            state.expenseList[index].category!,
-                                            style:
-                                                CustomTextStyle.titleTextStyle(
-                                                    fontsize: 16),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 20),
-                                          child: SizedBox(
-                                            width: 50,
-                                            child: Text(
-                                                state.expenseList[index]
-                                                    .description!,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: CustomTextStyle
-                                                    .subTextStyle(
-                                                        fontstyle:
-                                                            FontStyle.normal)),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 10, right: 20),
-                                        child: Text(
-                                          "\u20B9${double.parse(state.expenseList[index].amount!).toStringAsFixed(2)}",
-                                          style: CustomTextStyle.titleTextStyle(
-                                              color: Colors.deepOrange),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            bottom: 20, right: 20),
-                                        child: Text(
-                                          state.expenseList[index].date!,
-                                          style: CustomTextStyle.subTextStyle(),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),*/
                         ),
                       );
                     },
