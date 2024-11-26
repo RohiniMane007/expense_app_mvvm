@@ -27,18 +27,18 @@ class RegistrationView extends StatelessWidget {
         child: ListView(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: txtName,
                 validator: (value) {
                   return (value != null && value.isEmpty) ? 'Enter Name' : null;
                 },
                 decoration: const InputDecoration(
-                    hintText: "Full Name", border: OutlineInputBorder()),
+                    hintText: "Full Name *", border: OutlineInputBorder()),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: txtEmail,
                 validator: (value) {
@@ -47,11 +47,11 @@ class RegistrationView extends StatelessWidget {
                       : null;
                 },
                 decoration: const InputDecoration(
-                    hintText: "Email", border: OutlineInputBorder()),
+                    hintText: "Email *", border: OutlineInputBorder()),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 keyboardType: TextInputType.phone,
                 controller: txtPhone,
@@ -65,7 +65,7 @@ class RegistrationView extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 obscureText: true,
                 obscuringCharacter: '*',
@@ -79,7 +79,7 @@ class RegistrationView extends StatelessWidget {
                     hintText: "Password *", border: OutlineInputBorder()),
               ),
             ),
-            BlocBuilder<AuthBloc, AuthState>(
+            /*BlocBuilder<AuthBloc, AuthState>(
               builder: (context, state) {
                 return ElevatedButton(
                     onPressed: () {
@@ -96,6 +96,43 @@ class RegistrationView extends StatelessWidget {
                     },
                     child: const Text("Sign In"));
               },
+            ),*/
+            BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state.result == 'success') {
+                    Navigator.of(context)
+                        .pop(); // Navigate when registration is successful
+                  } else if (state.result == 'error') {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content:
+                              Text('Registration failed: ${state.result}')),
+                    );
+                  }
+                },
+                child:
+                    // BlocBuilder<AuthBloc, AuthState>(
+                    //   builder: (context, state) {
+                    //     return
+                    ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      BlocProvider.of<AuthBloc>(context).add(RegisterUser(
+                        name: txtName.text.trim(),
+                        email: txtEmail.text.trim(),
+                        phoneno: txtPhone.text.trim(),
+                        password: txtPassword.text.trim(),
+                      ));
+                    }
+                  },
+                  child: const Text("Sign In"),
+                )
+                //   },
+                // ),
+                ),
+            const Padding(
+              padding: EdgeInsets.all(10),
+              child: Text("* marked mandetory fields"),
             )
           ],
         ),

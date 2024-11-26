@@ -100,9 +100,31 @@ class LoginView extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        BlocBuilder<AuthBloc, AuthState>(
-                          builder: (context, state) {
-                            return ElevatedButton(
+                        BlocListener<AuthBloc, AuthState>(
+                            listener: (context, state) {
+                              if (state.result == "success") {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return BlocProvider(
+                                    create: (context) => ExpenseBloc(),
+                                    child: const ExpenseView(),
+                                  );
+                                }));
+                              } else {
+                                alertDialogBox(
+                                  context,
+                                  title: 'Alert',
+                                  content: const Text(
+                                      "Incorrect username or password."),
+                                  onOkClicked: () {
+                                    // Clear the text fields after showing the alert
+                                    txtUser.clear();
+                                    txtPass.clear();
+                                  },
+                                );
+                              }
+                            },
+                            child: ElevatedButton(
                               onPressed: () {
                                 // Trigger the login event when the button is pressed
                                 if (formKey.currentState!.validate()) {
@@ -112,27 +134,6 @@ class LoginView extends StatelessWidget {
                                       password: txtPass.text.trim(),
                                     ),
                                   );
-                                  if (state.result == "success") {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return BlocProvider(
-                                        create: (context) => ExpenseBloc(),
-                                        child: const ExpenseView(),
-                                      );
-                                    }));
-                                  } else {
-                                    alertDialogBox(
-                                      context,
-                                      title: 'Alert',
-                                      content: const Text(
-                                          "Incorrect username or password."),
-                                      onOkClicked: () {
-                                        // Clear the text fields after showing the alert
-                                        txtUser.clear();
-                                        txtPass.clear();
-                                      },
-                                    );
-                                  }
                                 }
                               },
                               style: ElevatedButton.styleFrom(
@@ -146,9 +147,7 @@ class LoginView extends StatelessWidget {
                               child: const Text("Log In",
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.white)),
-                            );
-                          },
-                        ),
+                            )),
                         const SizedBox(
                           height: 20,
                         ),
