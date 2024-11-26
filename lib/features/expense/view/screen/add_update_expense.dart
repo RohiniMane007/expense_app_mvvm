@@ -32,7 +32,7 @@ class _AddUpdateExpenseState extends State<AddUpdateExpense> {
     // widget.id ?? 0;
     txtAmount.text = widget.amount ?? "";
     txtDescription.text = widget.description ?? "";
-    txtDate.text = widget.date ?? "";
+    txtDate.text = widget.date ?? DateTime.now().toString().split(' ')[0];
     category.text = widget.category ?? "";
   }
 
@@ -123,9 +123,9 @@ class _AddUpdateExpenseState extends State<AddUpdateExpense> {
                             ),
                             onTap: () async {
                               DateTime? picked = await dateTimePicker(context);
-                              setState(() {
-                                txtDate.text = picked.toString().split(' ')[0];
-                              });
+                              // setState(() {
+                              txtDate.text = picked.toString().split(' ')[0];
+                              // });
                             })),
                     Padding(
                         padding: const EdgeInsets.all(30),

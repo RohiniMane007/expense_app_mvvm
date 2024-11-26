@@ -134,37 +134,44 @@ class ExpenseView extends StatelessWidget {
                 width: MediaQuery.sizeOf(context).width,
                 child: BlocBuilder<ExpenseBloc, ExpenseState>(
                   builder: (context, state) {
-                    return ListView.separated(
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(
-                          height: 15,
-                        );
-                      },
-                      itemCount: state.expenseList.length >= 3
-                          ? 3
-                          : state.expenseList.length,
-                      itemBuilder: (context, index) {
-                        return Dismissible(
-                            key: Key(state.expenseList[index].toString()),
-                            onDismissed: (direction) {
-                              BlocProvider.of<ExpenseBloc>(context).add(
-                                  ExpenseDeleteEvent(
-                                      id: state.expenseList[index].id!));
-                              // state.expenseList.removeAt(index);
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text("Deleted")));
+                    return state.expenseList.isNotEmpty
+                        ? ListView.separated(
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(
+                                height: 15,
+                              );
                             },
-                            child: CustomCard(
-                                image: iconList[
-                                    state.expenseList[index].category!]!,
-                                category: state.expenseList[index].category!,
-                                description:
-                                    state.expenseList[index].description!,
-                                amount: state.expenseList[index].amount!,
-                                date: state.expenseList[index].date!));
-                      },
-                    );
+                            itemCount: state.expenseList.length >= 3
+                                ? 3
+                                : state.expenseList.length,
+                            itemBuilder: (context, index) {
+                              return Dismissible(
+                                  key: Key(state.expenseList[index].toString()),
+                                  onDismissed: (direction) {
+                                    BlocProvider.of<ExpenseBloc>(context).add(
+                                        ExpenseDeleteEvent(
+                                            id: state.expenseList[index].id!));
+                                    // state.expenseList.removeAt(index);
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text("Deleted")));
+                                  },
+                                  child: CustomCard(
+                                      image: iconList[
+                                          state.expenseList[index].category!]!,
+                                      category:
+                                          state.expenseList[index].category!,
+                                      description:
+                                          state.expenseList[index].description!,
+                                      amount: state.expenseList[index].amount!,
+                                      date: state.expenseList[index].date!));
+                            },
+                          )
+                        : const Text(
+                            "Empty List",
+                            textAlign: TextAlign.center,
+                          );
                   },
                 ),
               ),
