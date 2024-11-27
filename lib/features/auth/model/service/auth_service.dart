@@ -21,6 +21,7 @@ class AuthService {
 
 */
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/model.dart';
@@ -49,6 +50,11 @@ class AuthService {
   }
 
   static Future<String> getUser(Database db, Map<String, String> user) async {
+    AndroidOptions getAndroidOptions() => const AndroidOptions(
+          encryptedSharedPreferences: true,
+        );
+    final storage = FlutterSecureStorage(aOptions: getAndroidOptions());
+
     List<Map> maps = await db.query('user',
         columns: ['username', 'password'],
         where: 'email = ? AND password = ?',
@@ -56,6 +62,9 @@ class AuthService {
 
     // print(maps);
     if (maps.length == 1) {
+      // final storage =  FlutterSecureStorage();
+      await storage.write(key: "username", value: user['username']);
+      await storage.write(key: "password", value: user['password']);
       return "success";
     } else {
       return "fail";
