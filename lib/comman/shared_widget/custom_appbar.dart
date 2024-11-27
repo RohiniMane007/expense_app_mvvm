@@ -6,14 +6,14 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final String initial;
+  // final String initial;
   final List<Widget> actions;
 
   // Constructor
   const CustomAppBar({
     super.key,
     required this.title,
-    required this.initial,
+    // required this.initial,
     this.actions = const [],
   });
 
@@ -39,6 +39,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.only(right: 10),
           child: CircleAvatar(
               child: PopupMenuButton(
+                  icon: BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                      return Text(state.username);
+                    },
+                  ),
                   position: PopupMenuPosition.under,
                   itemBuilder: (context) => [
                         PopupMenuItem(
@@ -49,7 +54,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text("Cancel")),
+                                  child: const Text("Cancel")),
                               TextButton(
                                   onPressed: () async {
                                     await storage.deleteAll();
@@ -57,7 +62,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                                     Navigator.of(context).pop();
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text("Logout")),
+                                  child: const Text("Logout")),
                             ],
                           ),
                         ))

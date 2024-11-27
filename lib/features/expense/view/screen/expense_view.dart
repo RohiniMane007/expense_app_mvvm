@@ -16,7 +16,6 @@ class ExpenseView extends StatelessWidget {
     BlocProvider.of<ExpenseBloc>(context).add(ExpenseListEvent());
     return Scaffold(
         appBar: const CustomAppBar(
-          initial: "",
           title: "Home",
         ),
         body: Column(
