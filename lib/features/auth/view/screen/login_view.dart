@@ -4,7 +4,7 @@ import 'package:expense_app/features/expense/view/screen/expense_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../comman/alert_dialog.dart';
+import '../../../../comman/shared_widget/alert_dialog.dart';
 import '../../../expense/view_model/bloc/expense_bloc.dart';
 
 class LoginView extends StatelessWidget {

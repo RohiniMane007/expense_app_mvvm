@@ -65,6 +65,9 @@ class AuthService {
       // final storage =  FlutterSecureStorage();
       await storage.write(key: "username", value: user['username']);
       await storage.write(key: "password", value: user['password']);
+
+      Map p = await storage.readAll();
+      print(p);
       return "success";
     } else {
       return "fail";

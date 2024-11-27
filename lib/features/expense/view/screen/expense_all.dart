@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../comman/shared_widget/custom_appbar.dart';
 import '../../../../core/utils/constant.dart';
 import '../../view_model/bloc/expense_bloc.dart';
 import '../widget/custom_card.dart';
@@ -11,8 +12,8 @@ class ExpenseAll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Expense List"),
+      appBar: const CustomAppBar(
+        title: "Expense List",
       ),
       body: Column(
         children: [
