@@ -49,7 +49,7 @@ class AuthService {
     await db.delete('user', where: 'id = ?', whereArgs: [id]);
   }
 
-  static Future<String> getUser(Database db, Map<String, String> user) async {
+  static Future<Map> getUser(Database db, Map<String, String> user) async {
     AndroidOptions getAndroidOptions() => const AndroidOptions(
           encryptedSharedPreferences: true,
         );
@@ -67,10 +67,10 @@ class AuthService {
       await storage.write(key: "password", value: user['password']);
 
       Map p = await storage.readAll();
-      print(p);
-      return "success";
+      print(p['username']);
+      return {"result": "success", "username": p['username']};
     } else {
-      return "fail";
+      return {"result": "fail"};
     }
   }
 }

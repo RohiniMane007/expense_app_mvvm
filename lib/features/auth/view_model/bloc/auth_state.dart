@@ -2,10 +2,12 @@ part of 'auth_bloc.dart';
 
 class AuthState extends Equatable {
   final String result;
-  const AuthState({this.result = 'loading'});
+  final String username;
+  const AuthState({this.result = 'loading', this.username = ""});
 
-  AuthState copyWith({required String? result}) {
-    return AuthState(result: result ?? this.result);
+  AuthState copyWith({required String? result, String? username}) {
+    return AuthState(
+        result: result ?? this.result, username: username ?? this.username);
   }
 
   @override
