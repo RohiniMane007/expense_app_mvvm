@@ -1,20 +1,25 @@
 import 'package:expense_app/core/utils/custom_textstyle.dart';
+import 'package:expense_app/features/auth/view_model/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final String initial;
   final List<Widget> actions;
 
   // Constructor
   const CustomAppBar({
     super.key,
     required this.title,
+    required this.initial,
     this.actions = const [],
   });
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<AuthBloc>(context);
     AndroidOptions getAndroidOptions() => const AndroidOptions(
           encryptedSharedPreferences: true,
         );
