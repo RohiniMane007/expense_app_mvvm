@@ -1,7 +1,5 @@
 import 'package:expense_app/core/utils/custom_textstyle.dart';
-// import 'package:expense_app/features/auth/view_model/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -61,14 +59,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ],
                 ),
               )),
-              // PopupMenuItem(child: BlocBuilder<AuthBloc, AuthState>(
-              //   builder: (context, state) {
-              //     return Text(
-              //       state.username,
-              //       style: const TextStyle(color: Colors.black),
-              //     );
-              //   },
-              // ))
             ],
           )),
         )
