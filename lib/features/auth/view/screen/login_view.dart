@@ -105,8 +105,14 @@ class LoginView extends StatelessWidget {
                               if (state.result == "success") {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return BlocProvider(
-                                    create: (context) => ExpenseBloc(),
+                                  return MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider<ExpenseBloc>(
+                                          create: (context) => ExpenseBloc()
+                                            ..add(ExpenseListEvent())),
+                                      BlocProvider<AuthBloc>(
+                                          create: (context) => AuthBloc())
+                                    ],
                                     child: const ExpenseView(),
                                   );
                                 }));

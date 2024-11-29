@@ -13,7 +13,7 @@ class ExpenseView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<ExpenseBloc>(context).add(ExpenseListEvent());
+    // BlocProvider.of<ExpenseBloc>(context).add(ExpenseListEvent());
     return Scaffold(
         appBar: const CustomAppBar(
           title: "Home",
