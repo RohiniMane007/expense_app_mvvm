@@ -41,7 +41,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: PopupMenuButton(
                   icon: BlocBuilder<AuthBloc, AuthState>(
                     builder: (context, state) {
-                      return Text(state.username);
+                      return Text(
+                        state.username,
+                        style: const TextStyle(color: Colors.black),
+                      );
                     },
                   ),
                   position: PopupMenuPosition.under,

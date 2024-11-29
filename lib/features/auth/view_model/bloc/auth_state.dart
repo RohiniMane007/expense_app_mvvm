@@ -11,7 +11,7 @@ class AuthState extends Equatable {
   }
 
   @override
-  List<Object> get props => [result];
+  List<Object> get props => [result, username];
 }
 
 // final class AuthInitial extends AuthState {}
