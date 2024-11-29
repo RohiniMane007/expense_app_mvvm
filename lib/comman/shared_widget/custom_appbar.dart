@@ -1,19 +1,19 @@
 import 'package:expense_app/core/utils/custom_textstyle.dart';
-import 'package:expense_app/features/auth/view_model/bloc/auth_bloc.dart';
+// import 'package:expense_app/features/auth/view_model/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  // final String initial;
+  final String? username;
   final List<Widget> actions;
 
   // Constructor
   const CustomAppBar({
     super.key,
     required this.title,
-    // required this.initial,
+    this.username,
     this.actions = const [],
   });
 
@@ -39,37 +39,38 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.only(right: 10),
           child: CircleAvatar(
               child: PopupMenuButton(
-                  icon: BlocBuilder<AuthBloc, AuthState>(
-                    builder: (context, state) {
-                      return Text(
-                        state.username,
-                        style: const TextStyle(color: Colors.black),
-                      );
-                    },
-                  ),
-                  position: PopupMenuPosition.under,
-                  itemBuilder: (context) => [
-                        PopupMenuItem(
-                            child: Container(
-                          child: Row(
-                            children: [
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("Cancel")),
-                              TextButton(
-                                  onPressed: () async {
-                                    await storage.deleteAll();
-                                    if (!context.mounted) return;
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("Logout")),
-                            ],
-                          ),
-                        ))
-                      ])),
+            position: PopupMenuPosition.under,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                  child: Container(
+                child: Row(
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("Cancel")),
+                    TextButton(
+                        onPressed: () async {
+                          await storage.deleteAll();
+                          if (!context.mounted) return;
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("Logout")),
+                  ],
+                ),
+              )),
+              // PopupMenuItem(child: BlocBuilder<AuthBloc, AuthState>(
+              //   builder: (context, state) {
+              //     return Text(
+              //       state.username,
+              //       style: const TextStyle(color: Colors.black),
+              //     );
+              //   },
+              // ))
+            ],
+          )),
         )
       ],
     );

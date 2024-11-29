@@ -111,7 +111,7 @@ class LoginView extends StatelessWidget {
                                           create: (context) => ExpenseBloc()
                                             ..add(ExpenseListEvent())),
                                       BlocProvider<AuthBloc>(
-                                          create: (context) => AuthBloc())
+                                          create: (_) => AuthBloc())
                                     ],
                                     child: const ExpenseView(),
                                   );
