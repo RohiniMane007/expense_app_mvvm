@@ -22,7 +22,14 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocProvider(
         create: (context) => AuthBloc(),
-        // create: (context) => ExpenseBloc(),
+        // providers: [
+        //   BlocProvider<AuthBloc>(
+        //     create: (BuildContext context) => AuthBloc(),
+        //   ),
+        //   BlocProvider<AppbarCubit>(
+        //     create: (BuildContext context) => AppbarCubit(),
+        //   ),
+        // ],
         child: const LoginView(),
       ),
     );

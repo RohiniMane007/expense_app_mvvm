@@ -108,7 +108,9 @@ class LoginView extends StatelessWidget {
                                   return BlocProvider(
                                     create: (BuildContext context) =>
                                         ExpenseBloc(),
-                                    child: const ExpenseView(),
+                                    child: ExpenseView(
+                                      username: state.username,
+                                    ),
                                   );
                                 }));
                               } else {

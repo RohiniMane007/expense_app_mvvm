@@ -17,7 +17,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    // BlocProvider.of<AuthBloc>(context);
+    // BlocProvider.of<AppbarCubit>(context).loginInfo();
     AndroidOptions getAndroidOptions() => const AndroidOptions(
           encryptedSharedPreferences: true,
         );
@@ -29,7 +29,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         style:
             CustomTextStyle.titleTextStyle(fontsize: 22, color: Colors.white),
       ),
-      centerTitle: true, // Optional, for centering the title
+      centerTitle: true,
       backgroundColor:
           Colors.teal, // You can change this to any color or gradient
       actions: [
@@ -60,6 +60,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               )),
             ],
+            child: Text(username ?? ""),
           )),
         )
       ],

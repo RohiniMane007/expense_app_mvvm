@@ -9,14 +9,17 @@ import '../../view_model/bloc/expense_bloc.dart';
 import 'expense_all.dart';
 
 class ExpenseView extends StatelessWidget {
-  const ExpenseView({super.key});
+  final String username;
+  const ExpenseView({super.key, required this.username});
 
   @override
   Widget build(BuildContext context) {
+    print("==========$username");
     // BlocProvider.of<ExpenseBloc>(context).add(ExpenseListEvent());
     return Scaffold(
-        appBar: const CustomAppBar(
+        appBar: CustomAppBar(
           title: "Home",
+          username: username,
         ),
         body: Column(
           children: [
