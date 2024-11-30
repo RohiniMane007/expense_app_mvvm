@@ -1,3 +1,3 @@
 class RouteNames {
-  static const initial = '/';
+  static const login = '/';
 }
