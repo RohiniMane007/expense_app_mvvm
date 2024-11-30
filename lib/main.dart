@@ -1,4 +1,4 @@
-import 'package:expense_app/datepicker.dart';
+// import 'package:expense_app/datepicker.dart';
 import 'package:expense_app/features/auth/view/screen/login_view.dart';
 import 'package:expense_app/features/auth/view_model/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
@@ -15,17 +15,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: const CustomDate()
-        // home: BlocProvider(
-        //   create: (context) => AuthBloc(),
-        //   child: const LoginView(),
-        // ),
-        );
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      // home: const CustomDate()
+      home: BlocProvider(
+        create: (context) => AuthBloc(),
+        child: const LoginView(),
+      ),
+    );
   }
 }
