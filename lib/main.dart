@@ -1,3 +1,4 @@
+import 'package:expense_app/datepicker.dart';
 import 'package:expense_app/features/auth/view/screen/login_view.dart';
 import 'package:expense_app/features/auth/view_model/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const MyApp()
+        home: const CustomDate()
         // home: BlocProvider(
         //   create: (context) => AuthBloc(),
         //   child: const LoginView(),
