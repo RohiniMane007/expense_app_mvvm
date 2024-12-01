@@ -1,3 +1,3 @@
-class RouteNames {
+class RouteName {
   static const login = '/';
 }
