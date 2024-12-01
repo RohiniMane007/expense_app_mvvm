@@ -9,6 +9,12 @@ class Routes {
         return MaterialPageRoute(
             builder: (BuildContext context) =>
                 RouteData.getRouteData(context, RouteName.login, {}));
+
+      case RouteName.register:
+        return MaterialPageRoute(
+            builder: (BuildContext context) =>
+                RouteData.getRouteData(context, RouteName.register, {}));
+
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

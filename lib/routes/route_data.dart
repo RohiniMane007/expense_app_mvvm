@@ -13,6 +13,12 @@ class RouteData {
           create: (context) => AuthBloc(),
           child: const LoginView(),
         );
+
+      case RouteName.register:
+        return BlocProvider(
+          create: (context) => AuthBloc(),
+          child: const RegistrationView(),
+        );
     }
   }
 }
