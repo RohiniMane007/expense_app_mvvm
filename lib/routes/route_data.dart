@@ -1,5 +1,7 @@
 import 'package:expense_app/features/auth/view/view.dart';
 import 'package:expense_app/features/auth/view_model/bloc/auth_bloc.dart';
+import 'package:expense_app/features/expense/view/view.dart';
+import 'package:expense_app/features/expense/view_model/bloc/expense_bloc.dart';
 import 'package:expense_app/routes/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +20,18 @@ class RouteData {
         return BlocProvider(
           create: (context) => AuthBloc(),
           child: const RegistrationView(),
+        );
+
+      case RouteName.addUpdateExpense:
+        return BlocProvider(
+          create: (context) => ExpenseBloc(),
+          child: const AddUpdateExpense(),
+        );
+
+      case RouteName.expenseList:
+        return BlocProvider(
+          create: (context) => ExpenseBloc(),
+          child: const ExpenseList(),
         );
     }
   }

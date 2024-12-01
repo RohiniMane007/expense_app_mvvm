@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../../comman/shared_widget/custom_appbar.dart';
 import '../../../../core/utils/constant.dart';
 import '../../view_model/bloc/expense_bloc.dart';
-import 'expense_all.dart';
+import 'expense_list.dart';
 
 class ExpenseView extends StatelessWidget {
   final String username;
@@ -126,7 +126,7 @@ class ExpenseView extends StatelessWidget {
                         return BlocProvider.value(
                           value: BlocProvider.of<ExpenseBloc>(context)
                             ..add(ExpenseListEvent()),
-                          child: const ExpenseAll(),
+                          child: const ExpenseList(),
                         );
                       }));
                     },

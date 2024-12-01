@@ -6,8 +6,8 @@ import '../../view_model/bloc/expense_bloc.dart';
 import '../widget/custom_card.dart';
 import 'add_update_expense.dart';
 
-class ExpenseAll extends StatelessWidget {
-  const ExpenseAll({super.key});
+class ExpenseList extends StatelessWidget {
+  const ExpenseList({super.key});
 
   @override
   Widget build(BuildContext context) {

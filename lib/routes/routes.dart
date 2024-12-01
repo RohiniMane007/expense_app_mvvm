@@ -15,6 +15,16 @@ class Routes {
             builder: (BuildContext context) =>
                 RouteData.getRouteData(context, RouteName.register, {}));
 
+      case RouteName.addUpdateExpense:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => RouteData.getRouteData(
+                context, RouteName.addUpdateExpense, {}));
+
+      case RouteName.expenseList:
+        return MaterialPageRoute(
+            builder: (BuildContext context) =>
+                RouteData.getRouteData(context, RouteName.expenseList, {}));
+
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(
