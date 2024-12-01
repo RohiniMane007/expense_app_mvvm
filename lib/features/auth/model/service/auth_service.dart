@@ -67,7 +67,7 @@ class AuthService {
       await storage.write(key: "password", value: user['password']);
 
       Map p = await storage.readAll();
-      print(p['username']);
+      // print(p['username']);
       return {"result": "success", "username": p['username']};
     } else {
       return {"result": "fail"};

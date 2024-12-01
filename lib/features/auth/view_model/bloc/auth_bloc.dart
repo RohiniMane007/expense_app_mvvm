@@ -34,7 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     Map result = await AuthService.getUser(await databaseHelper.database,
         {"username": event.username, "password": event.password});
-    print(result);
+    // print(result);
 
     emit(
         state.copyWith(result: result["result"], username: result['username']));

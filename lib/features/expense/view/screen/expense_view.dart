@@ -14,7 +14,7 @@ class ExpenseView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("==========$username");
+    // print("==========$username");
     // BlocProvider.of<ExpenseBloc>(context).add(ExpenseListEvent());
     return Scaffold(
         appBar: CustomAppBar(
