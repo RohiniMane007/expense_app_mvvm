@@ -119,13 +119,13 @@ class ExpenseList extends StatelessWidget {
   }
 }
 
-DateTime getStartOfWeek(DateTime date) {
-  // Get the difference from Monday
-  int difference = date.weekday - DateTime.monday;
+// DateTime getStartOfWeek(DateTime date) {
+//   // Get the difference from Monday
+//   int difference = date.weekday - DateTime.monday;
 
-  // Adjust the date to get Monday of the current week
-  return date.subtract(Duration(days: difference));
-}
+//   // Adjust the date to get Monday of the current week
+//   return date.subtract(Duration(days: difference));
+// }
 
 int getWeekNumber(DateTime date) {
   DateTime firstDayOfYear = DateTime(date.year, 1, 1);
