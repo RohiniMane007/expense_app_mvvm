@@ -1,6 +1,7 @@
 import 'package:expense_app/features/auth/view/screen/registration_view.dart';
 import 'package:expense_app/features/auth/view_model/bloc/auth_bloc.dart';
 import 'package:expense_app/features/expense/view/screen/expense_view.dart';
+import 'package:expense_app/routes/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -103,16 +104,20 @@ class LoginView extends StatelessWidget {
                         BlocListener<AuthBloc, AuthState>(
                             listener: (context, state) {
                               if (state.result == "success") {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return BlocProvider(
-                                    create: (BuildContext context) =>
-                                        ExpenseBloc(),
-                                    child: ExpenseView(
-                                      username: state.username,
-                                    ),
-                                  );
-                                }));
+                                Navigator.popAndPushNamed(
+                                    context, RouteName.expenseView,
+                                    arguments: {"username": state.username});
+
+                                // Navigator.push(context,
+                                //     MaterialPageRoute(builder: (context) {
+                                //   return BlocProvider(
+                                //     create: (BuildContext context) =>
+                                //         ExpenseBloc(),
+                                //     child: ExpenseView(
+                                //       username: state.username,
+                                //     ),
+                                //   );
+                                // }));
                               } else {
                                 alertDialogBox(
                                   context,

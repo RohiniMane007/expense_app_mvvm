@@ -22,6 +22,14 @@ class RouteData {
           child: const RegistrationView(),
         );
 
+      case RouteName.expenseView:
+        return BlocProvider(
+          create: (context) => ExpenseBloc(),
+          child: ExpenseView(
+            username: args["username"],
+          ),
+        );
+
       case RouteName.addUpdateExpense:
         return BlocProvider(
           create: (context) => ExpenseBloc(),

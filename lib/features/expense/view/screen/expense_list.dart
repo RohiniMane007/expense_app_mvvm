@@ -30,7 +30,10 @@ class ExpenseList extends StatelessWidget {
                           ExpenseFilterListEvent(
                               week: getWeekNumber(today), year: today.year));
                     },
-                    child: const Text("Week")),
+                    child: const Text(
+                      "Week",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )),
                 TextButton(
                     onPressed: () {
                       DateTime now = DateTime.now();

@@ -15,6 +15,11 @@ class Routes {
             builder: (BuildContext context) =>
                 RouteData.getRouteData(context, RouteName.register, {}));
 
+      case RouteName.expenseView:
+        return MaterialPageRoute(
+            builder: (BuildContext context) =>
+                RouteData.getRouteData(context, RouteName.expenseView, {}));
+
       case RouteName.addUpdateExpense:
         return MaterialPageRoute(
             builder: (BuildContext context) => RouteData.getRouteData(

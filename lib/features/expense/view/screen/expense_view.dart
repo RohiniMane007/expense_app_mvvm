@@ -9,8 +9,8 @@ import '../../view_model/bloc/expense_bloc.dart';
 import 'expense_list.dart';
 
 class ExpenseView extends StatelessWidget {
-  final String username;
-  const ExpenseView({super.key, required this.username});
+  final String? username;
+  const ExpenseView({super.key, this.username});
 
   @override
   Widget build(BuildContext context) {
