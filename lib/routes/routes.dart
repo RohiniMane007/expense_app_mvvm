@@ -4,6 +4,7 @@ import 'route_data.dart';
 
 class Routes {
   static Route<dynamic> generatedRoute(RouteSettings settings) {
+    Map<String, dynamic>? args = settings.arguments as Map<String, dynamic>?;
     switch (settings.name) {
       case RouteName.login:
         return MaterialPageRoute(
@@ -18,7 +19,7 @@ class Routes {
       case RouteName.expenseView:
         return MaterialPageRoute(
             builder: (BuildContext context) =>
-                RouteData.getRouteData(context, RouteName.expenseView, {}));
+                RouteData.getRouteData(context, RouteName.expenseView, args!));
 
       case RouteName.addUpdateExpense:
         return MaterialPageRoute(
@@ -28,7 +29,7 @@ class Routes {
       case RouteName.expenseList:
         return MaterialPageRoute(
             builder: (BuildContext context) =>
-                RouteData.getRouteData(context, RouteName.expenseList, {}));
+                RouteData.getRouteData(context, RouteName.expenseList, args!));
 
       default:
         return MaterialPageRoute(builder: (_) {

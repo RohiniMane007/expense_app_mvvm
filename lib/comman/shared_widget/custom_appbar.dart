@@ -1,6 +1,9 @@
 import 'package:expense_app/core/utils/custom_textstyle.dart';
+import 'package:expense_app/routes/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../../routes/routes.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -53,7 +56,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                           await storage.deleteAll();
                           if (!context.mounted) return;
                           Navigator.of(context).pop();
-                          Navigator.of(context).pop();
+                          Navigator.pushReplacementNamed(
+                              context, RouteName.login);
+                          // Navigator.of(context).pop();
                         },
                         child: const Text("Logout")),
                   ],

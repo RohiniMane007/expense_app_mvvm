@@ -7,13 +7,15 @@ import '../widget/custom_card.dart';
 import 'add_update_expense.dart';
 
 class ExpenseList extends StatelessWidget {
-  const ExpenseList({super.key});
+  final String? username;
+  const ExpenseList({super.key, this.username});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: "Expense List",
+        username: username,
       ),
       body: Column(
         children: [

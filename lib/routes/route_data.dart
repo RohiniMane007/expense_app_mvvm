@@ -24,7 +24,7 @@ class RouteData {
 
       case RouteName.expenseView:
         return BlocProvider(
-          create: (context) => ExpenseBloc(),
+          create: (context) => ExpenseBloc()..add(ExpenseListEvent()),
           child: ExpenseView(
             username: args["username"],
           ),
