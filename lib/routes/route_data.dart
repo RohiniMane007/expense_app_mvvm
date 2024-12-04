@@ -37,8 +37,8 @@ class RouteData {
         );
 
       case RouteName.expenseList:
-        return BlocProvider.value(
-          value: BlocProvider.of<ExpenseBloc>(context)..add(ExpenseListEvent()),
+        return BlocProvider(
+          create: (context) => ExpenseBloc(),
           child: ExpenseList(
             username: args["username"],
           ),

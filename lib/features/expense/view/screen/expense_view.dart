@@ -1,5 +1,6 @@
 import 'package:expense_app/features/expense/view/screen/add_update_expense.dart';
 import 'package:expense_app/features/expense/view/widget/custom_card.dart';
+import 'package:expense_app/routes/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -122,13 +123,15 @@ class ExpenseView extends StatelessWidget {
                 ),
                 TextButton(
                     onPressed: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      //   return BlocProvider.value(
-                      //     value: BlocProvider.of<ExpenseBloc>(context)
-                      //       ..add(ExpenseListEvent()),
-                      //     child: const ExpenseList(),
-                      //   );
-                      // }));
+                      // Navigator.pushNamed(context, RouteName.expenseList,
+                      //     arguments: {"username": username});
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return BlocProvider.value(
+                          value: BlocProvider.of<ExpenseBloc>(context)
+                            ..add(ExpenseListEvent()),
+                          child: const ExpenseList(),
+                        );
+                      }));
                     },
                     child: const Text("See All >>"))
               ],
