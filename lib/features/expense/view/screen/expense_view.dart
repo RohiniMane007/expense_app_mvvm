@@ -122,13 +122,13 @@ class ExpenseView extends StatelessWidget {
                 ),
                 TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return BlocProvider.value(
-                          value: BlocProvider.of<ExpenseBloc>(context)
-                            ..add(ExpenseListEvent()),
-                          child: const ExpenseList(),
-                        );
-                      }));
+                      // Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      //   return BlocProvider.value(
+                      //     value: BlocProvider.of<ExpenseBloc>(context)
+                      //       ..add(ExpenseListEvent()),
+                      //     child: const ExpenseList(),
+                      //   );
+                      // }));
                     },
                     child: const Text("See All >>"))
               ],

@@ -3,8 +3,6 @@ import 'package:expense_app/routes/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-// import '../../routes/routes.dart';
-
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final String? username;
@@ -20,7 +18,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    // BlocProvider.of<AppbarCubit>(context).loginInfo();
     AndroidOptions getAndroidOptions() => const AndroidOptions(
           encryptedSharedPreferences: true,
         );
@@ -40,10 +37,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.only(right: 10),
           child: CircleAvatar(
               child: PopupMenuButton(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            color: Colors.teal[100],
             position: PopupMenuPosition.under,
             itemBuilder: (context) => [
               PopupMenuItem(
                   child: Container(
+                // decoration: BoxDecoration(border: Border.all(width: 0.2)),
+                padding: const EdgeInsets.only(top: 10),
                 child: Row(
                   children: [
                     TextButton(
