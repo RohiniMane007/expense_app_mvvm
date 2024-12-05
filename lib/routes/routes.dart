@@ -32,6 +32,11 @@ class Routes {
             builder: (context) =>
                 RouteData.getRouteData(context, RouteName.expenseList, args!));
 
+      case RouteName.expensePieChart:
+        return MaterialPageRoute(
+            builder: (context) =>
+                RouteData.getRouteData(context, RouteName.expensePieChart, {}));
+
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

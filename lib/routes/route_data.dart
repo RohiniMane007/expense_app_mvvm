@@ -1,5 +1,6 @@
 import 'package:expense_app/features/auth/view/view.dart';
 import 'package:expense_app/features/auth/view_model/bloc/auth_bloc.dart';
+import 'package:expense_app/features/expense/view/screen/expense_piechart.dart';
 import 'package:expense_app/features/expense/view/view.dart';
 import 'package:expense_app/features/expense/view_model/bloc/expense_bloc.dart';
 import 'package:expense_app/routes/route_name.dart';
@@ -42,6 +43,12 @@ class RouteData {
           child: ExpenseList(
             username: args["username"],
           ),
+        );
+
+      case RouteName.expensePieChart:
+        return BlocProvider(
+          create: (context) => ExpenseBloc(),
+          child: const ExpensePiechart(),
         );
     }
   }

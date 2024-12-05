@@ -9,142 +9,188 @@ import '../../../../core/utils/constant.dart';
 import '../../view_model/bloc/expense_bloc.dart';
 import 'expense_list.dart';
 
-class ExpenseView extends StatelessWidget {
+class ExpenseView extends StatefulWidget {
   final String? username;
   const ExpenseView({super.key, this.username});
 
   @override
+  State<ExpenseView> createState() => _ExpenseViewState();
+}
+
+class _ExpenseViewState extends State<ExpenseView> {
+  ValueNotifier<String> view = ValueNotifier<String>("home");
+
+  @override
+  void dispose() {
+    super.dispose();
+    view.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // print("==========$username");
-    // BlocProvider.of<ExpenseBloc>(context).add(ExpenseListEvent());
+    // String view = "home";
+
     return Scaffold(
         appBar: CustomAppBar(
           title: "Home",
-          username: username,
+          username: widget.username,
         ),
-        body: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const Text("Monthly Expense"),
-                Text(DateFormat('MMMM').format(DateTime.now()))
-              ],
-            ),
-            Container(
-                padding: const EdgeInsets.all(30),
-                width: MediaQuery.sizeOf(context).width,
-                height: 220,
-                child: BlocBuilder<ExpenseBloc, ExpenseState>(
-                  builder: (context, state) {
-                    return AnimatedContainer(
-                      curve: Curves.bounceIn,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 0.1),
-                          borderRadius: BorderRadius.circular(15),
-                          color: const Color.fromARGB(255, 2, 90, 81),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.teal, //.withOpacity(0.5),
-                              spreadRadius: 5,
-                              // blurRadius: 10,
-                              offset: Offset(5, 5),
-                            )
-                          ]),
-                      duration: const Duration(seconds: 4),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Expense",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                          Text(
-                            "\u20B9 ${state.expenseList.fold<double>(0, (sum, item) => sum + double.parse(item.amount.toString())).toStringAsFixed(2)}",
-                            style: const TextStyle(
-                                fontSize: 24,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                )),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text("Recents"),
-                ),
-                TextButton(
-                    onPressed: () {
-                      // Navigator.pushNamed(context, RouteName.expenseList,
-                      //     arguments: {"username": username});
-                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return BlocProvider.value(
-                          value: BlocProvider.of<ExpenseBloc>(context)
-                            ..add(ExpenseListEvent()),
-                          child: const ExpenseList(),
-                        );
-                      }));
-                    },
-                    child: const Text("See All >>"))
-              ],
-            ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(top: 10, bottom: 20),
-                // decoration: const BoxDecoration(color: Colors.amber),
-                width: MediaQuery.sizeOf(context).width,
-                child: BlocBuilder<ExpenseBloc, ExpenseState>(
-                  builder: (context, state) {
-                    return state.expenseList.isNotEmpty
-                        ? ListView.separated(
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(
-                                height: 15,
-                              );
-                            },
-                            itemCount: state.expenseList.length >= 3
-                                ? 3
-                                : state.expenseList.length,
-                            itemBuilder: (context, index) {
-                              return Dismissible(
-                                  key: Key(state.expenseList[index].toString()),
-                                  onDismissed: (direction) {
-                                    BlocProvider.of<ExpenseBloc>(context).add(
-                                        ExpenseDeleteEvent(
-                                            id: state.expenseList[index].id!));
-                                    // state.expenseList.removeAt(index);
-
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            content: Text("Deleted")));
+        body: //view == "home"?
+            ValueListenableBuilder<String>(
+                valueListenable: view, //ValueNotifier<String>("home"),
+                builder: (context, value, child) {
+                  return value == "home"
+                      ? Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                const Text("Monthly Expense"),
+                                Text(DateFormat('MMMM').format(DateTime.now()))
+                              ],
+                            ),
+                            Container(
+                                padding: const EdgeInsets.all(30),
+                                width: MediaQuery.sizeOf(context).width,
+                                height: 220,
+                                child: BlocBuilder<ExpenseBloc, ExpenseState>(
+                                  builder: (context, state) {
+                                    return AnimatedContainer(
+                                      curve: Curves.bounceIn,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.black, width: 0.1),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: const Color.fromARGB(
+                                              255, 2, 90, 81),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Colors
+                                                  .teal, //.withOpacity(0.5),
+                                              spreadRadius: 5,
+                                              // blurRadius: 10,
+                                              offset: Offset(5, 5),
+                                            )
+                                          ]),
+                                      duration: const Duration(seconds: 4),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text("Expense",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(
+                                            "\u20B9 ${state.expenseList.fold<double>(0, (sum, item) => sum + double.parse(item.amount.toString())).toStringAsFixed(2)}",
+                                            style: const TextStyle(
+                                                fontSize: 24,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    );
                                   },
-                                  child: CustomCard(
-                                      image: iconList[
-                                          state.expenseList[index].category!]!,
-                                      category:
-                                          state.expenseList[index].category!,
-                                      description:
-                                          state.expenseList[index].description!,
-                                      amount: state.expenseList[index].amount!,
-                                      date: state.expenseList[index].date!));
-                            },
-                          )
-                        : const Text(
-                            "Empty List",
-                            textAlign: TextAlign.center,
-                          );
-                  },
-                ),
-              ),
-            )
-          ],
-        ),
+                                )),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: Text("Recents"),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      // Navigator.pushNamed(context, RouteName.expenseList,
+                                      //     arguments: {"username": username});
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (_) {
+                                        return BlocProvider.value(
+                                          value: BlocProvider.of<ExpenseBloc>(
+                                              context)
+                                            ..add(ExpenseListEvent()),
+                                          child: const ExpenseList(),
+                                        );
+                                      }));
+                                    },
+                                    child: const Text("See All >>"))
+                              ],
+                            ),
+                            Expanded(
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 20),
+                                // decoration: const BoxDecoration(color: Colors.amber),
+                                width: MediaQuery.sizeOf(context).width,
+                                child: BlocBuilder<ExpenseBloc, ExpenseState>(
+                                  builder: (context, state) {
+                                    return state.expenseList.isNotEmpty
+                                        ? ListView.separated(
+                                            separatorBuilder: (context, index) {
+                                              return const SizedBox(
+                                                height: 15,
+                                              );
+                                            },
+                                            itemCount:
+                                                state.expenseList.length >= 3
+                                                    ? 3
+                                                    : state.expenseList.length,
+                                            itemBuilder: (context, index) {
+                                              return Dismissible(
+                                                  key: Key(state
+                                                      .expenseList[index]
+                                                      .toString()),
+                                                  onDismissed: (direction) {
+                                                    BlocProvider.of<
+                                                                ExpenseBloc>(
+                                                            context)
+                                                        .add(ExpenseDeleteEvent(
+                                                            id: state
+                                                                .expenseList[
+                                                                    index]
+                                                                .id!));
+                                                    // state.expenseList.removeAt(index);
+
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                            const SnackBar(
+                                                                content: Text(
+                                                                    "Deleted")));
+                                                  },
+                                                  child: CustomCard(
+                                                      image: iconList[state
+                                                          .expenseList[index]
+                                                          .category!]!,
+                                                      category: state
+                                                          .expenseList[index]
+                                                          .category!,
+                                                      description: state
+                                                          .expenseList[index]
+                                                          .description!,
+                                                      amount: state
+                                                          .expenseList[index]
+                                                          .amount!,
+                                                      date: state
+                                                          .expenseList[index]
+                                                          .date!));
+                                            },
+                                          )
+                                        : const Text(
+                                            "Empty List",
+                                            textAlign: TextAlign.center,
+                                          );
+                                  },
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      : const Center(child: Text("center"));
+                }),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.miniCenterDocked,
         floatingActionButton: FloatingActionButton(
@@ -175,12 +221,20 @@ class ExpenseView extends StatelessWidget {
                     Icons.home,
                     color: Colors.white,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      view = ValueNotifier<String>("home");
+                    });
+                  },
                 ),
                 IconButton(
                   icon:
                       const Icon(Icons.pie_chart_rounded, color: Colors.white),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      view = ValueNotifier<String>("chart");
+                    });
+                  },
                 ),
               ],
             ),
