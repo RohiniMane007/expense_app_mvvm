@@ -112,7 +112,7 @@ class _ExpenseViewState extends State<ExpenseView> {
                                           value: BlocProvider.of<ExpenseBloc>(
                                               context)
                                             ..add(ExpenseListEvent()),
-                                          child: const ExpenseList(),
+                                          child: ExpenseList(),
                                         );
                                       }));
                                     },

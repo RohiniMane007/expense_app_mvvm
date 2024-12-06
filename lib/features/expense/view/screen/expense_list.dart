@@ -8,7 +8,17 @@ import 'add_update_expense.dart';
 
 class ExpenseList extends StatelessWidget {
   final String? username;
-  const ExpenseList({super.key, this.username});
+  ExpenseList({super.key, this.username});
+
+  final ValueNotifier<int?> _selectedButtonIndex = ValueNotifier<int?>(null);
+
+  void _selectButton(int index) {
+    if (_selectedButtonIndex.value == index) {
+      _selectedButtonIndex.value = index;
+    } else {
+      _selectedButtonIndex.value = index;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
